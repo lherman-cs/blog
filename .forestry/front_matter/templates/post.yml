@@ -11,13 +11,6 @@ fields:
   name: title
   config:
     required: true
-- type: datetime
-  name: datedate
-  label: Date
-  config:
-    required: true
-    display_utc: false
-  hidden: false
 - type: text
   default: Lukas Herman
   label: Author
