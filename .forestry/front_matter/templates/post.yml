@@ -17,6 +17,7 @@ fields:
   config:
     required: true
     display_utc: false
+  hidden: false
 - type: text
   default: Lukas Herman
   label: Author
