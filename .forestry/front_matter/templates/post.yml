@@ -1,0 +1,40 @@
+---
+label: post
+hide_body: false
+is_partial: false
+fields:
+- type: file
+  label: Image
+  name: image
+- type: text
+  label: Title
+  name: title
+  config:
+    required: true
+- type: datetime
+  name: datedate
+  label: Date
+  config:
+    required: true
+    display_utc: false
+- type: text
+  default: Lukas Herman
+  label: Author
+  name: author
+  config:
+    required: true
+- type: tag_list
+  label: Tags
+  name: tags
+- type: number
+  label: Weight
+  name: weight
+  config:
+    min: '0'
+    max: '10'
+    step: '1'
+    required: true
+- type: boolean
+  name: draft
+  label: Draft
+  default: true
