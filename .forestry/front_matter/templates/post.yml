@@ -29,5 +29,3 @@ fields:
     step: '1'
     required: true
   default: '8'
-pages:
-- content/post/poop.md
