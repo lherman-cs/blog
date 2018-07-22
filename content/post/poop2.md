@@ -10,30 +10,6 @@ title = "poop2"
 weight = 8
 
 +++
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
-
-I havejadljasd;jals;djasdada
+    func main(){
+    	fmt.Println("Hello world")
+    }
