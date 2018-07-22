@@ -38,3 +38,5 @@ fields:
   name: draft
   label: Draft
   default: true
+pages:
+- content/post/poop.md
