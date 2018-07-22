@@ -6,6 +6,9 @@ fields:
 - type: file
   label: Image
   name: image
+- type: boolean
+  name: showonlyimage
+  label: Show Only Image
 - type: text
   label: Title
   name: title
