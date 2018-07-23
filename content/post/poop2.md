@@ -10,4 +10,4 @@ title = "poop2"
 weight = 8
 
 +++
-    {{< gist spf13 7896402 "img.html" >}}
+    {{< gist spf13 7896402 >}}
