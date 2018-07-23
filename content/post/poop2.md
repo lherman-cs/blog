@@ -11,7 +11,9 @@ weight = 8
 
 +++
     {{< highlight go >}}
-    fmt.Println("hello world")
+    func main(){
+    	fmt.Println("hello world")
+    }
     {{< / highlight >}}
 
     func main(){
