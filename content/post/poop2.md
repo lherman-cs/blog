@@ -10,6 +10,4 @@ title = "poop2"
 weight = 8
 
 +++
-    {{< gist spf13 7896402 >}}
-
-{{< gist spf13 7896402 >}}
+hello world
