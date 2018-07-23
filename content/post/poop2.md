@@ -10,6 +10,9 @@ title = "poop2"
 weight = 8
 
 +++
+    {{< highlight go >}}
+    fmt.Println("hello world")
+    {{< / highlight >}}
 
     func main(){
     	fmt.Println("Hello world")
