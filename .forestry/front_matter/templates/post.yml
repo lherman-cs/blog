@@ -11,12 +11,16 @@ fields:
   name: title
   config:
     required: true
-- type: text
-  default: Lukas Herman
-  label: Author
-  name: author
+- type: select
   config:
+    source:
+      type: datafiles
+      file: config-toml
+      path: writers
     required: true
+  label: Writer
+  name: writer
+  default: ''
 - type: tag_list
   label: Tags
   name: tags
