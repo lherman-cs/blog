@@ -14,14 +14,15 @@ pygmentsUseClasses = true
 name = "Home"
 url = "/"
 weight = 1
-[[menu.main]]
-name = "About"
-url = "about/"
-weight = 2
-[[menu.main]]
-name = "Get in touch"
-url = "contact/"
-weight = 3
+# [[menu.main]]
+# name = "About"
+# url = "about/"
+# weight = 2
+# [[menu.main]]
+# name = "Get in touch"
+# url = "contact/"
+# weight = 3
+
 [params]
 author = "Lukas Herman"
 authorLink = "https://lherman.tk"
@@ -30,25 +31,28 @@ copyright = ["&copy; 2018 Lukas Herman", "Nederburg Hugo Theme by [Appernetic](h
 description = "Describe your website"
 email = "lherman.cs@gmail.com"
 slogan = "Thoughts, stories, and ideas."
-[params.social]
-email = "lherman.cs@gmail.com"
-facebook = "https://www.facebook.com/lukashadiyanto"
-github = "https://github.com/lherman-cs"
-googleplus = ""
-instagram = ""
-linkedin = "https://www.linkedin.com/in/lukas-herman/"
-pinterest = ""
-rss = true
-stackoverflow = "https://stackoverflow.com/users/8177592/lukas-herman"
-twitter = "https://twitter.com/lherman_cs"
-[params.writers."Lukas Herman"]
-email = "lherman.cs@gmail.com"
-facebook = "https://www.facebook.com/lukashadiyanto"
-github = "https://github.com/lherman-cs"
-googleplus = ""
-instagram = ""
-link = "https://lherman.tk"
-linkedin = "https://www.linkedin.com/in/lukas-herman/"
-pinterest = ""
-stackoverflow = "https://stackoverflow.com/users/8177592/lukas-herman"
-twitter = "https://twitter.com/lherman_cs"
+
+  [params.social]
+  email = "lherman.cs@gmail.com"
+  facebook = "https://www.facebook.com/lukashadiyanto"
+  github = "https://github.com/lherman-cs"
+  googleplus = ""
+  instagram = ""
+  linkedin = "https://www.linkedin.com/in/lukas-herman/"
+  pinterest = ""
+  rss = true
+  stackoverflow = "https://stackoverflow.com/users/8177592/lukas-herman"
+  twitter = "https://twitter.com/lherman_cs"
+
+  [params.writers]
+    [params.writers."Lukas Herman"]
+    email = "lherman.cs@gmail.com"
+    facebook = "https://www.facebook.com/lukashadiyanto"
+    github = "https://github.com/lherman-cs"
+    googleplus = ""
+    instagram = ""
+    link = "https://lherman.tk"
+    linkedin = "https://www.linkedin.com/in/lukas-herman/"
+    pinterest = ""
+    stackoverflow = "https://stackoverflow.com/users/8177592/lukas-herman"
+    twitter = "https://twitter.com/lherman_cs"
