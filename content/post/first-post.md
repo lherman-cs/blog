@@ -16,7 +16,7 @@ Go:
 
     fmt.Println("Hello World!")
 
-{{</ highlight }}
+{{< / highlight >}}
 
 C:
 
