@@ -37,5 +37,4 @@ fields:
     required: true
   default: '8'
 pages:
-- content/post/poop.md
 - content/post/poop2.md
