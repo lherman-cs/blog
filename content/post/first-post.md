@@ -1,10 +1,10 @@
 +++
 categories = []
 date = "2018-07-28T00:51:26+00:00"
-image = ""
+image = "/uploads/elijah-hiett-540714-unsplash.jpg"
 tags = []
 title = "First Post"
-weight = 8
+weight = 1
 writer = "Lukas Herman"
 
 +++
