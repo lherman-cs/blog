@@ -1,14 +1,13 @@
 +++
-tags = []
 categories = []
-draft = false
+date = "2018-06-17T02:54:56-04:00"
 image = ""
+tags = []
+title = "Minimal Go Docker Container (122x smaller)"
 weight = 5
 writer = "Lukas Herman"
-title = "Minimal Go Docker Container (122x smaller)"
-date = "2018-06-17T02:54:56-04:00"
-+++
 
++++
 Before we talk about how to make a small Go container, I want to talk a little bit about why we need it in the first place. According to Abby, an AWS evangelist, "smaller images mean faster build, and faster deploys. This also means a smaller attack surface" (check her video out [here](https://www.youtube.com/watch?v=pPsREQbf3PA&t=8s)). This brings us to these 3 important points:
 * Speed
 * Security
@@ -48,7 +47,7 @@ We would see the output as follow:
 
 ## Naïve Way to Dockerize Our Simple Web Server
 *github.com/lherman-cs/scratch/Dockerfile.naive*
-```
+```docker
 FROM golang:1.10.3
 
 WORKDIR /go/src/app
@@ -60,7 +59,7 @@ ENTRYPOINT [ "./app" ]
 ```
 This Dockerfile is fine. It will run as expected. But, if you check the size of this image, you will see that this simple image takes **a lot of storage** unnecessarily.
 
-```
+```sh
 docker images
 ```
 ![Screenshot-from-2018-06-16-21-57-46](/content/images/2018/06/Screenshot-from-2018-06-16-21-57-46.png)
@@ -69,7 +68,7 @@ Yup! You see that right. It's 801MB. Can we improve that? Absolutely!
 
 ## Optimization #1: Use a Smaller Base Image
 *github.com/lherman-cs/scratch/Dockerfile.alpine*
-```
+```docker
 FROM golang:1.10.3-alpine
 
 WORKDIR /go/src/app
@@ -82,7 +81,7 @@ ENTRYPOINT [ "./app" ]
 *Note: Notice that the base image changed to* **golang:1.10.3-alpine**
 This time, we simply changed the base image with a smaller image. The result is quite impressive!
 
-```
+```sh
 docker images
 ```
 ![Screenshot-from-2018-06-16-21-58-32](/content/images/2018/06/Screenshot-from-2018-06-16-21-58-32.png)
@@ -91,7 +90,7 @@ From 801MB to 382MB, we have reduced the size by **2.097x**
 
 ## Optimization #2: Use Docker Multi-stage Build
 *github.com/lherman-cs/scratch/Dockerfile.multi*
-```
+```docker
 FROM golang:1.10.3-alpine AS builder
 
 WORKDIR /go/src/app
@@ -106,7 +105,7 @@ ENTRYPOINT [ "./app" ]
 ```
 Wait... Why are there 2 base images? This is multi-stage build. Multi-stage build was introduced in **Docker 17.05**. This feature helps us to yet reduce our image size. [(read more about multi-stage build)](https://docs.docker.com/develop/develop-images/multistage-build/). The idea is to strip off all the dependencies that are needed **only for building** the program.
 
-```
+```sh
 docker images
 ```
 ![Screenshot-from-2018-06-16-22-09-27](/content/images/2018/06/Screenshot-from-2018-06-16-22-09-27.png)
@@ -115,7 +114,7 @@ This way, we have reduced the size by **74.17x**
 
 ## Optimization #3: Use a Blank Image
 *github.com/lherman-cs/scratch/Dockerfile.blank*
-```
+```docker
 FROM golang:1.10.3-alpine AS builder
 
 WORKDIR /go/src/app
@@ -132,7 +131,7 @@ ENTRYPOINT [ "./app" ]
 
 Since Go is statically compiled, we know that Go programs have zero dependencies. Therefore, we can yet strip off all OS dependecies. Here, we use "scratch" as the base image. **Scratch** is the blank image, from which all other images built upon. By loading the go binary into this scratch image, we'll have a fully functional docker container with a very minimal size.
 
-```
+```sh
 docker images
 ```
 ![Screenshot-from-2018-06-16-22-27-36](/content/images/2018/06/Screenshot-from-2018-06-16-22-27-36.png)
