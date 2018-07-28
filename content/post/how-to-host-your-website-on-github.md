@@ -1,14 +1,13 @@
 +++
-tags = []
 categories = []
-draft = false
-image = ""
+date = "2018-07-22T22:30:47-04:00"
+image = "/uploads/photo-1426024120108-99cc76989c71.jpg"
+tags = []
+title = "How to Host Your Website on Github for Free Without Code!"
 weight = 5
 writer = "Lukas Herman"
-title = "How to Host Your Website on Github for Free Without Code!"
-date = "2018-07-22T22:30:47-04:00"
-+++
 
++++
 First of all, what is Github? According to Wikipedia, "Github is a web-based hosting service for version control using Git." This is great! You can store your code and its history too. But, its awesomeness doesn't end there. Rather than just storing the source code, Github also provides you **free website hosting.** You might think, "that totally makes sense." Since the source code is already there, it's very easy to simply host the website using the existing source code. Yup, you got that right!
 
 *If you don't have a Github account yet, you can simply follow the registration procedure on Github's [main page](https://github.com/)*
