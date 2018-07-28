@@ -38,3 +38,4 @@ fields:
   default: '8'
 pages:
 - content/post/first-post.md
+- content/post/shared-storage-nfs.md
