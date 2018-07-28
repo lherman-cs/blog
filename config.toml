@@ -37,16 +37,14 @@ pinterest = ""
 rss = true
 stackoverflow = "https://stackoverflow.com/users/8177592/lukas-herman"
 twitter = "https://twitter.com/lherman_cs"
-
-[params.writers]
-  [params.writers."Lukas Herman"]
-  link = "https://lherman.tk"
-  email = "lherman.cs@gmail.com"
-  facebook = "https://www.facebook.com/lukashadiyanto"
-  github = "https://github.com/lherman-cs"
-  googleplus = ""
-  instagram = ""
-  linkedin = "https://www.linkedin.com/in/lukas-herman/"
-  pinterest = ""
-  stackoverflow = "https://stackoverflow.com/users/8177592/lukas-herman"
-  twitter = "https://twitter.com/lherman_cs"
+[params.writers."Lukas Herman"]
+email = "lherman.cs@gmail.com"
+facebook = "https://www.facebook.com"
+github = "https://github.com/lherman-cs"
+googleplus = ""
+instagram = ""
+link = "https://lherman.tk"
+linkedin = "https://www.linkedin.com/in/lukas-herman/"
+pinterest = ""
+stackoverflow = "https://stackoverflow.com/users/8177592/lukas-herman"
+twitter = "https://twitter.com/lherman_cs"
