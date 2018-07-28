@@ -39,4 +39,5 @@ fields:
 pages:
 - content/post/first-post.md
 - content/post/shared-storage-nfs.md
+- content/post/test.md
 - content/post/how-to-host-your-website-on-github.md
