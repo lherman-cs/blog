@@ -1,7 +1,6 @@
 +++
 categories = []
 date = "2018-07-28T00:51:26+00:00"
-draft = false
 image = ""
 tags = []
 title = "First Post"
@@ -9,14 +8,11 @@ weight = 8
 writer = "Lukas Herman"
 
 +++
-
 Hello World! This is my first post!
 
 Go:
 
-```go
-log.Println("Hello World!")
-```
+    fmt.Println("Hello World!")
 
 C:
 
