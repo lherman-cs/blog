@@ -6,10 +6,10 @@ paginate = 5
 preserveTaxonomyNames = true
 theme = "hugo-nederburg-theme"
 title = "Coding and Life"
-pygmentsOptions = "linenos=table"
+pygmentsOptions = ""
 pygmentsCodefences = true
 pygmentsCodefencesGuessSyntax = true
-PygmentsStyle = "dracula"
+pygmentsUseClasses = true
 [[menu.main]]
 name = "Home"
 url = "/"
