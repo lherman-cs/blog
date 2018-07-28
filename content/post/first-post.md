@@ -12,7 +12,11 @@ Hello World! This is my first post!
 
 Go:
 
+\`\`\`go
+
     fmt.Println("Hello World!")
+
+\`\`\`
 
 C:
 
