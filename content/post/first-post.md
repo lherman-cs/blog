@@ -13,7 +13,11 @@ Hello World! This is my first post!
 
 Go:
 
+{{< highlight go "lineos=table" >}}
+
     log.Println("Hello World!")
+
+{{</ highlight >}}
 
 C:
 
