@@ -1,22 +1,18 @@
 +++
-tags = []
 categories = []
-draft = false
+date = "2018-01-23T19:24:27-04:00"
 image = "https://images.unsplash.com/photo-1512075135822-67cdd9dd7314?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ&s=3a19fe5be57ee36b620ec41fa40bfd71"
+tags = []
+title = "Greedy Algorithm (Lecture)"
 weight = 5
 writer = "Lukas Herman"
-title = "Greedy Algorithm (Lecture)"
-date = "2018-01-23T19:24:27-04:00"
+
 +++
-
-
 Lecture by James Wang (jzwang@clemson.edu)
 
->Taking the maximum benefit without considering what will happen next; greedy algorithms just need to maximize the local cost.
-
+> Taking the maximum benefit without considering what will happen next; greedy algorithms just need to maximize the local cost.
 
 Greedy algorithms can be parallelized well. Each CPU can be used to calculate the local min/max. **But**, you might not find the best solution using greedy algorithms.
-
 
 Steps to finding efficient greedy algorithm:
 
@@ -38,26 +34,20 @@ Problems that can work well with being greedy:
 
 ## Example
 
-
 ![Screenshot-from-2018-01-23-08-32-44](/content/images/2018/01/Screenshot-from-2018-01-23-08-32-44.png)
-*Note: the picture is taken from my algorithm course's lecture*
-
-
+_Note: the picture is taken from my algorithm course's lecture_
 
 Properties of optimal solution:
 
-- \\# of pennies <= 4
-  - Proof: Replace 5 pennies with 1 nickel
-- \\# of nickels <= 1
-- \\# of quarters <= 3
-- \\# of nickels + # of dimes <= 2
-  - Proof:
-    - Replace 3 dimes and 0 nickels with 1 quarter and 1 nickel
-    - Replace 2 dimes and 1 nickel with 1 quarter
-    - Recall: at most 1 nickel
-
+* # of pennies <= 4
+  * Proof: Replace 5 pennies with 1 nickel
+* # of nickels <= 1
+* # of quarters <= 3
+* # of nickels + # of dimes <= 2
+  * Proof:
+    * Replace 3 dimes and 0 nickels with 1 quarter and 1 nickel
+    * Replace 2 dimes and 1 nickel with 1 quarter
+    * Recall: at most 1 nickel
 
 ![Screenshot-from-2018-01-23-08-47-19](/content/images/2018/01/Screenshot-from-2018-01-23-08-47-19.png)
-*Note: the picture is taken from my algorithm course's lecture*
-
-
+_Note: the picture is taken from my algorithm course's lecture_

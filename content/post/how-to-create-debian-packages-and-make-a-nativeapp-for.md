@@ -1,14 +1,13 @@
 +++
-tags = []
 categories = []
-draft = false
-image = ""
+date = "2018-01-19T16:50:33-04:00"
+image = "/uploads/bench-accounting-49908.jpg"
+tags = []
+title = "How to create Debian packages and make a native app for any web app"
 weight = 5
 writer = "Lukas Herman"
-title = "How to create Debian packages and make a native app for any web app"
-date = "2018-01-19T16:50:33-04:00"
-+++
 
++++
 To intro, I am an undergraduate Computer Science student at Clemson University. I was having issues with printing to the Clemson network printers, Clemson has desktop printer client apps for macs and windows machines to be able to print to the network printers but only a web app to print from Linux machines, with no desktop app, therefore I wanted to make one to serve Debian Linux machines. 
 
 I found a wrapper class for being able to wrap most web apps into desktop apps  [jiahaog/nativefier](https://github.com/jiahaog/nativefier). This is an open source project on GitHub. I installed this locally and took the Clemson web app and wrapped it as a desktop app. 
