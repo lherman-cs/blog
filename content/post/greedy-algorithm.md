@@ -34,20 +34,28 @@ Problems that can work well with being greedy:
 
 ## Example
 
-![Screenshot-from-2018-01-23-08-32-44](/content/images/2018/01/Screenshot-from-2018-01-23-08-32-44.png)
+![](/uploads/Screenshot-from-2018-01-23-08-32-44.png)
 _Note: the picture is taken from my algorithm course's lecture_
 
 Properties of optimal solution:
 
-* # of pennies <= 4
+* 
+
+  # of pennies <= 4
   * Proof: Replace 5 pennies with 1 nickel
-* # of nickels <= 1
-* # of quarters <= 3
-* # of nickels + # of dimes <= 2
+* 
+
+  # of nickels <= 1
+* 
+
+  # of quarters <= 3
+* 
+
+  # of nickels + # of dimes <= 2
   * Proof:
     * Replace 3 dimes and 0 nickels with 1 quarter and 1 nickel
     * Replace 2 dimes and 1 nickel with 1 quarter
     * Recall: at most 1 nickel
 
-![Screenshot-from-2018-01-23-08-47-19](/content/images/2018/01/Screenshot-from-2018-01-23-08-47-19.png)
+![](/uploads/Screenshot-from-2018-01-23-08-47-19.png)
 _Note: the picture is taken from my algorithm course's lecture_

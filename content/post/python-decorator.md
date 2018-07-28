@@ -1,17 +1,17 @@
 +++
-tags = []
 categories = []
-draft = false
+date = "2018-07-02T04:22:57-04:00"
 image = "https://images.unsplash.com/photo-1513042966058-0ac1891fdc2d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ&s=811dd33449166725062598c12718894c"
+tags = []
+title = "Python Decorator"
 weight = 5
 writer = "Lukas Herman"
-title = "Python Decorator"
-date = "2018-07-02T04:22:57-04:00"
-+++
 
++++
 Decorator is a very useful and powerful syntax that Python developers came up with in Python 2.4 through [PEP 318 proposal](https://www.python.org/dev/peps/pep-0318/). Since then, many powerful libraries started using this extensively. These libraries including Flask, Django, AioHTTP, Sanic, and so on... You got the point. Python decorator is powerful!
 
 *Flask (quoted directly from the official page)*
+
 ```python
 from flask import Flask
 app = Flask(__name__)
@@ -38,6 +38,7 @@ Though, decorator pattern is not necessarily the same with Python decorator. Pyt
 
 # Coding
 ## Original Code
+
 ```python
 def add(x, y):
     '''This is a very complicated function :)'''
@@ -143,7 +144,8 @@ Luckily, though, Python is very flexible and dynamic. Python has these 2 powerfu
 Let's see how these 2 syntaxes generalize our decorator function.
 
 Previous:
-```
+
+```python
 def timeit(fn):
     def wrapper(x, y):
         start = time()
@@ -156,7 +158,8 @@ def timeit(fn):
 ```
 
 After:
-```
+
+```python
 def timeit(fn):
     def wrapper(*args, **kwargs):
         start = time()
