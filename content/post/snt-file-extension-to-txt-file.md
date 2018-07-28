@@ -1,14 +1,13 @@
 +++
-tags = []
 categories = []
-draft = false
-image = ""
+date = "2018-01-04T23:51:40-04:00"
+image = "/uploads/sntPost.jpg"
+tags = []
+title = "Convert .snt File Extension to .txt File"
 weight = 5
 writer = "Lukas Herman"
-title = "Convert .snt File Extension to .txt File"
-date = "2018-01-04T23:51:40-04:00"
-+++
 
++++
 This should take between two and ten minutes and from this tutorial, you should gain a useful file as well as some knowledge of SQL and python.
 
 If your not looking for a detailed tutorial, scroll to the bottom or Ctrl+f "steps:" then Enter
