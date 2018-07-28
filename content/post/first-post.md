@@ -11,49 +11,32 @@ writer = "Lukas Herman"
 Hello World! This is my first post!
 
 Go:
-
-{{< highlight go >}}
-
-    fmt.Println("Hello World!")
-
-{{< / highlight >}}
+```go
+log.Println("Hello World!")
+```
 
 C:
-
-\`\`\`c
-
-printf("Hello World!\\n");
-
-\`\`\`
+```c
+printf("Hello World!\n");
+```
 
 C++:
-
-\`\`\`c++
-
+```c++
 cout << "Hello World!" << endl;
-
-\`\`\`
+```
 
 Python:
-
-\`\`\`python
-
+```python
 print("Hello World!")
-
-\`\`\`
+```
 
 Java:
-
-\`\`\`java
-
+```java
 System.out.println("Hello World!");
+```
 
-\`\`\`
 
 Javascript:
-
-\`\`\`javascript
-
+```javascript
 console.log("Hello World!")
-
-\`\`\`
+```
