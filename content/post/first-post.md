@@ -1,7 +1,7 @@
 +++
 categories = []
 date = "2018-07-28T00:51:26+00:00"
-draft = true
+draft = false
 image = ""
 tags = []
 title = "First Post"
@@ -9,15 +9,14 @@ weight = 8
 writer = "Lukas Herman"
 
 +++
+
 Hello World! This is my first post!
 
 Go:
 
-{{< highlight go "lineos=table" >}}
-
-    log.Println("Hello World!")
-
-{{</ highlight >}}
+```go
+log.Println("Hello World!")
+```
 
 C:
 
