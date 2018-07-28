@@ -76,7 +76,7 @@ sqlite3 plum.sqlite "select * from Note;" > result.txt
 We want to use python to scrape all notes pulled from the SQL file, so copy  [ this code](https://gist.githubusercontent.com/lherman-cs/c4e98c7c8003da832cd145519e7f9786/raw/895e7e6fd022c2795519a1c19ac1674a5ef388b3/scraping.py) then run it on the data pulled from the SQL table:
 
 ```cmd 
-wget "https://blog.lherman.tk/data/scraping.py"
+wget "https://gist.githubusercontent.com/lherman-cs/c4e98c7c8003da832cd145519e7f9786/raw/895e7e6fd022c2795519a1c19ac1674a5ef388b3/scraping.py"
 ```
 
 OR copy
@@ -152,7 +152,7 @@ OSDISK(C:)/Users/myuser/AppData/Local/Packages/Microsoft.MicrosoftStickyNotes_8w
 
 ```sh
 sqlite3 plum.sqlite "select * from Note;" > result.txt
-wget "https://blog.lherman.tk/data/scraping.py"
+wget "https://gist.githubusercontent.com/lherman-cs/c4e98c7c8003da832cd145519e7f9786/raw/895e7e6fd022c2795519a1c19ac1674a5ef388b3/scraping.py"
 python3 scraping.py > notes.txt
 rm result.txt
 ```
