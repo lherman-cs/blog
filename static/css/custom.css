@@ -63,10 +63,6 @@
 
 /* Custom CSS */
 
-pre {
-  white-space: pre;
-}
-
 pre code {
   padding: 0;
   background: initial;
