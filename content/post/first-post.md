@@ -38,5 +38,5 @@ System.out.println("Hello World!");
 
 Javascript:
 ```javascript
-console.log("Hello World!")
+console.log("Hello World!");
 ```
