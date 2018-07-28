@@ -11,9 +11,10 @@ writer = "Lukas Herman"
 At home, I have 2 cheap single boards: Rock64 and Raspberry pi 3. I've been using both of them as my servers. Today, I did a maintenance to both of my servers, including upgrading, restructuring the network, and add a **shared storage**. In this story, I will share step-by-step how I installed NFS shared storage to my server and also my thought process a little bit.
 
 There are 3 popular shared storage protocols that I found on the internet:
-1\. SSH
-2\. SMB
-3\. NFS
+
+1. SSH
+2. SMB
+3. NFS
 
 Each of them has its own pros and cons. For example, using SSH protocol is great because it is flexible, secure, and available anywhere. However, it is the slowest protocol for transferring data (For more detail: [here](https://askubuntu.com/questions/289544/ssh-vs-smb-vs-nfs-for-gui-file-transfer)). So, before I decided which protocol that I wanted to use for my shared protocol, I thought about what I need from having a shared storage and what kind of network that these servers will be running on.
 
