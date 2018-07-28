@@ -1,6 +1,6 @@
 baseURL = "https://blog-dev.lherman.tk/"
-disqusShortname = ""
-googleAnalytics = ""
+disqusShortname = "lukasherman"
+googleAnalytics = "UA-111663256-1"
 languageCode = "en-us"
 paginate = 5
 preserveTaxonomyNames = true
