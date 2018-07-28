@@ -1,7 +1,7 @@
 +++
 categories = []
 date = "2018-06-17T02:54:56-04:00"
-image = ""
+image = "https://images.unsplash.com/photo-1493946740644-2d8a1f1a6aff?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ&s=2a42149bdadb9808b62d87f71f08dab1"
 tags = []
 title = "Minimal Go Docker Container (122x smaller)"
 weight = 5

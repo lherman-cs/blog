@@ -2,7 +2,7 @@
 tags = []
 categories = []
 draft = false
-image = ""
+image = "https://images.unsplash.com/photo-1489731007795-388eee095ff6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ&s=e102b8ebf11546682d2efaa2a070c6c0"
 weight = 5
 writer = "Lukas Herman"
 title = "High-Performance String Concatenation in Go"
