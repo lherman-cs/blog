@@ -11,6 +11,7 @@ writer = "Lukas Herman"
 First of all, what is Github? According to Wikipedia, "Github is a web-based hosting service for version control using Git." This is great! You can store your code and its history too. But, its awesomeness doesn't end there. Rather than just storing the source code, Github also provides you **free website hosting.** You might think, "that totally makes sense." Since the source code is already there, it's very easy to simply host the website using the existing source code. Yup, you got that right!
 
 _If you don't have a Github account yet, you can simply follow the registration procedure on Github's_ [_main page_](https://github.com/)
+
 ![github](https://i.imgur.com/JO7X36Y.png)
 
 For the sake of this tutorial, I want to keep everything to be **super simple**. I'll have new posts in the future for more advanced topics. But, for now, we **won't use any git command**, but we'll **only use Github's web UI**.
