@@ -1,13 +1,14 @@
 +++
-categories = []
-date = "2018-07-28T00:51:26+00:00"
-image = "/uploads/elijah-hiett-540714-unsplash.jpg"
 tags = []
-title = "First Post"
-weight = 1
+categories = []
+draft = false
+image = ""
+weight = 5
 writer = "Lukas Herman"
-
+title = "First Post"
+date = "2017-12-27T02:16:25-04:00"
 +++
+
 Hello World! This is my first post!
 
 Go:
@@ -17,7 +18,8 @@ log.Println("Hello World!")
 
 C:
 ```c
-printf("Hello World!\n");
+printf("Hello World!\
+");
 ```
 
 C++:
@@ -38,5 +40,5 @@ System.out.println("Hello World!");
 
 Javascript:
 ```javascript
-console.log("Hello World!");
+console.log("Hello World!")
 ```
