@@ -12,11 +12,11 @@ Hello World! This is my first post!
 
 Go:
 
-\`\`\`go
+{{< highlight go >}}
 
     fmt.Println("Hello World!")
 
-\`\`\`
+{{</ highlight }}
 
 C:
 
