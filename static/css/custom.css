@@ -71,3 +71,8 @@ pre code {
   padding: 0;
   background: initial;
 }
+
+/* Fix overflow width */
+img {
+  max-width: 100%;
+}
