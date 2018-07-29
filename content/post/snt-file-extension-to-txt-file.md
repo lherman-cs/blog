@@ -2,11 +2,12 @@
 categories = []
 date = "2018-01-04T23:51:40-04:00"
 image = "/uploads/sntPost.jpg"
+slug = "snt-file-extension-to-txt-file"
 tags = []
 title = "Convert .snt File Extension to .txt File"
 weight = 5
-writer = "Lukas Herman"
-slug = "snt-file-extension-to-txt-file"
+writer = "Gabrielle Stewart"
+
 +++
 This should take between two and ten minutes and from this tutorial, you should gain a useful file as well as some knowledge of SQL and python.
 
