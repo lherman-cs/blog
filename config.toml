@@ -12,7 +12,7 @@ pygmentsCodefencesGuessSyntax = true
 pygmentsUseClasses = true
 
 [permalinks]
-post = "/:year/:month/:day/:title/"
+post = "/:year/:month/:day/:slug/"
 
 [[menu.main]]
 name = "Home"
