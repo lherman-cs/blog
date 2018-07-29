@@ -6,6 +6,7 @@ tags = []
 title = "Greedy Algorithm (Lecture)"
 weight = 5
 writer = "Lukas Herman"
+slug = "greedy-algorithm"
 
 +++
 Lecture by James Wang (jzwang@clemson.edu)

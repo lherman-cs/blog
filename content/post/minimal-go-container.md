@@ -6,6 +6,7 @@ tags = []
 title = "Minimal Go Docker Container (122x smaller)"
 weight = 5
 writer = "Lukas Herman"
+slug = "minimal-go-container"
 
 +++
 Before we talk about how to make a small Go container, I want to talk a little bit about why we need it in the first place. According to Abby, an AWS evangelist, "smaller images mean faster build, and faster deploys. This also means a smaller attack surface" (check her video out [here](https://www.youtube.com/watch?v=pPsREQbf3PA&t=8s)). This brings us to these 3 important points:

@@ -6,6 +6,7 @@ tags = []
 title = "How to Host Your Website on Github for Free Without Code!"
 weight = 5
 writer = "Lukas Herman"
+slug = "how-to-host-your-website-on-github"
 
 +++
 First of all, what is Github? According to Wikipedia, "Github is a web-based hosting service for version control using Git." This is great! You can store your code and its history too. But, its awesomeness doesn't end there. Rather than just storing the source code, Github also provides you **free website hosting.** You might think, "that totally makes sense." Since the source code is already there, it's very easy to simply host the website using the existing source code. Yup, you got that right!

@@ -6,6 +6,7 @@ tags = []
 title = "How to create Debian packages and make a native app for any web app"
 weight = 5
 writer = "Lukas Herman"
+slug = "how-to-create-debian-packages-and-make-a-nativeapp-for"
 
 +++
 To intro, I am an undergraduate Computer Science student at Clemson University. I was having issues with printing to the Clemson network printers, Clemson has desktop printer client apps for macs and windows machines to be able to print to the network printers but only a web app to print from Linux machines, with no desktop app, therefore I wanted to make one to serve Debian Linux machines.

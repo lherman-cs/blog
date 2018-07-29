@@ -6,6 +6,7 @@ tags = []
 title = "First Post"
 weight = 5
 writer = "Lukas Herman"
+slug = "first-post"
 
 +++
 Hello World! This is my first post!

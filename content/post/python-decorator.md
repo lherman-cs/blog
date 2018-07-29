@@ -6,6 +6,7 @@ tags = []
 title = "Python Decorator"
 weight = 5
 writer = "Lukas Herman"
+slug = "python-decorator"
 
 +++
 Decorator is a very useful and powerful syntax that Python developers came up with in Python 2.4 through [PEP 318 proposal](https://www.python.org/dev/peps/pep-0318/). Since then, many powerful libraries started using this extensively. These libraries including Flask, Django, AioHTTP, Sanic, and so on... You got the point. Python decorator is powerful!

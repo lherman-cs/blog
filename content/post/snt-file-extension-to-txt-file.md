@@ -6,7 +6,7 @@ tags = []
 title = "Convert .snt File Extension to .txt File"
 weight = 5
 writer = "Lukas Herman"
-
+slug = "snt-file-extension-to-txt-file"
 +++
 This should take between two and ten minutes and from this tutorial, you should gain a useful file as well as some knowledge of SQL and python.
 

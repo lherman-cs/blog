@@ -6,7 +6,7 @@ tags = []
 title = "Shared Storage (NFS)"
 weight = 5
 writer = "Lukas Herman"
-
+slug = "shared-storage-nfs"
 +++
 At home, I have 2 cheap single boards: Rock64 and Raspberry pi 3. I've been using both of them as my servers. Today, I did a maintenance to both of my servers, including upgrading, restructuring the network, and add a **shared storage**. In this story, I will share step-by-step how I installed NFS shared storage to my server and also my thought process a little bit.
 

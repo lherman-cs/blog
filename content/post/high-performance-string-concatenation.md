@@ -6,6 +6,7 @@ tags = []
 title = "High-Performance String Concatenation in Go"
 weight = 5
 writer = "Lukas Herman"
+slug = "high-performance-string-concatenation"
 
 +++
 Go is a great and powerful programming language as well as my personal favorite. It's statically compiled, high performant, and great at concurrent computing. Even so, it's still the programmer's responsibility to utilize the programming language's strength fully.
