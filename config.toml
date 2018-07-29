@@ -10,6 +10,10 @@ pygmentsOptions = ""
 pygmentsCodefences = true
 pygmentsCodefencesGuessSyntax = true
 pygmentsUseClasses = true
+
+[permalinks]
+post = "/:year/:month/:day/:title/"
+
 [[menu.main]]
 name = "Home"
 url = "/"
