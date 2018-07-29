@@ -2,11 +2,11 @@
 categories = []
 date = "2018-07-02T04:22:57-04:00"
 image = "https://images.unsplash.com/photo-1513042966058-0ac1891fdc2d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ&s=811dd33449166725062598c12718894c"
+slug = "python-decorator"
 tags = []
 title = "Python Decorator"
 weight = 5
 writer = "Lukas Herman"
-slug = "python-decorator"
 
 +++
 Decorator is a very useful and powerful syntax that Python developers came up with in Python 2.4 through [PEP 318 proposal](https://www.python.org/dev/peps/pep-0318/). Since then, many powerful libraries started using this extensively. These libraries including Flask, Django, AioHTTP, Sanic, and so on... You got the point. Python decorator is powerful!
@@ -194,7 +194,7 @@ Luckily, Python has this awesome decorator function called ```lru_cache```. This
 
 ```lru_cache``` basically does the memoization technique, but with a decorator function. Very neat! Here's how to use it:
 
-```python
+{{< highlight python >}}
 from functools import lru_cache
 
 @lru_cache(maxsize=None)
@@ -204,7 +204,7 @@ def fib(n):
     return fib(n - 2) + fib(n - 1)
 
 print(fib(40))
-```
+{{< / highlight >}}
 
 That's it! Just 2 extra lines of codes! (1 line is even for importing the module, which shouldn't be counted). How's the performance? From **37.62s**, this code only took **0.02s**. That's **1881x** performance!!
 
