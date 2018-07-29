@@ -1,4 +1,4 @@
-baseURL = "https://blog-dev.lherman.tk/"
+baseURL = "https://blog.lherman.tk/"
 # disqusShortname = "lherman"
 googleAnalytics = "UA-111663256-1"
 languageCode = "en-us"
