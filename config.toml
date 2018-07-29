@@ -60,3 +60,8 @@ slogan = "Thoughts, stories, and ideas."
     pinterest = ""
     stackoverflow = "https://stackoverflow.com/users/8177592/lukas-herman"
     twitter = "https://twitter.com/lherman_cs"
+
+    [params.writers."Gabrielle Stewart"]
+    email = "gestewa@g.clemson.edu"
+    facebook = "https://www.facebook.com/Gaby12345678910"
+    linkedin = "https://www.linkedin.com/in/gabrielle-stewart-cs/"
