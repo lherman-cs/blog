@@ -1,6 +1,6 @@
 +++
 categories = []
-date = "2017-12-29T02:57:47-04:00"
+date = "2017-12-28T02:57:47-04:00"
 image = "/uploads/network_layout.png"
 tags = []
 title = "Shared Storage (NFS)"
