@@ -37,8 +37,8 @@ fields:
     required: true
   default: '8'
 pages:
-- content/post/first-post.md
-- content/post/shared-storage-nfs.md
-- content/post/how-to-host-your-website-on-github.md
-- content/post/snt-file-extension-to-txt-file.md
 - content/post/how-to-create-debian-packages-and-make-a-nativeapp-for.md
+- content/post/snt-file-extension-to-txt-file.md
+- content/post/how-to-host-your-website-on-github.md
+- content/post/shared-storage-nfs.md
+- content/post/first-post.md
