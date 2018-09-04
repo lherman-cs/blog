@@ -1,4 +1,4 @@
-baseURL = "https://blog.lherman.tk/"
+baseURL = "https://blog.lukas-coding.us/"
 # disqusShortname = "lherman"
 googleAnalytics = "UA-111663256-1"
 languageCode = "en-us"
@@ -29,7 +29,7 @@ weight = 1
 
 [params]
 author = "Lukas Herman"
-authorLink = "https://lherman.tk"
+authorLink = "https://lukas-coding.us"
 bio = []
 copyright = ["&copy; 2018 Lukas Herman", "Nederburg Hugo Theme by [Appernetic](https://appernetic.io).", "A port of Tracks by Compete Themes."]
 description = "Describe your website"
@@ -55,7 +55,7 @@ slogan = "Thoughts, stories, and ideas."
     github = "https://github.com/lherman-cs"
     googleplus = ""
     instagram = ""
-    link = "https://lherman.tk"
+    link = "https://lukas-coding.us"
     linkedin = "https://www.linkedin.com/in/lukas-herman/"
     pinterest = ""
     stackoverflow = "https://stackoverflow.com/users/8177592/lukas-herman"
