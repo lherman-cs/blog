@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https://blog.lukas-coding.us/"
+        },
+        "articleSection" : "post",
+        "name" : "Minimal Go Docker Container (122x smaller)",
+        "headline" : "Minimal Go Docker Container (122x smaller)",
+        "description" : "Before we talk about how to make a small Go container, I want to talk a little bit about why we need it in the first place. According to Abby, an AWS evangelist, &ldquo;smaller images mean faster build, and faster deploys. This also means a smaller attack surface&rdquo; (check her video out here). This brings us to these 3 important points:
+ Speed Security Stability (This is an implicit benefit from the previous 2 points)  This is great, right?",
+        "inLanguage" : "en",
+        "author" : "",
+        "creator" : "",
+        "publisher": "",
+        "accountablePerson" : "",
+        "copyrightHolder" : "",
+        "copyrightYear" : "2018",
+        "datePublished": "2018-06-16 00:00:00 -0400 EDT",
+        "dateModified" : "2018-06-16 00:00:00 -0400 EDT",
+        "url" : "https://blog.lukas-coding.us/2018/06/16/minimal-go-container/",
+        "wordCount" : "499",
+        "image" : https://blog.lukas-coding.us/https://images.unsplash.com/photo-1493946740644-2d8a1f1a6aff?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ&amp;s=2a42149bdadb9808b62d87f71f08dab1",
+        "keywords" : [ "Blog" ]   
+    }
+    </script>
+
+
+ <title>Minimal Go Docker Container (122x smaller) </title>
+
+
+<meta name="description" content="Describe your website" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="//fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+<link rel="stylesheet" href="https://blog.lukas-coding.us/css/font-awesome.min.css" type='text/css' media='all'>
+
+<link href="https://blog.lukas-coding.us/css/style.css" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://blog.lukas-coding.us/css/custom.css" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://blog.lukas-coding.us/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://blog.lukas-coding.us/img/favicon.ico" type="image/x-icon">
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-111663256-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fa fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+    <li>
+      <a href="https://www.facebook.com/lukashadiyanto" data-animate-hover="pulse" class="facebook" target="_blank">
+        <i class="fa fa-facebook-square" title="facebook"></i>
+        <span class="screen-reader-text">facebook</span>
+      </a>
+    </li>
+    
+
+    
+
+    
+    <li>
+      <a href="https://twitter.com/lherman_cs" data-animate-hover="pulse" class="twitter" target="_blank">
+        <i class="fa fa-twitter-square" title="twitter"></i>
+        <span class="screen-reader-text">twitter</span>
+      </a>
+    </li>
+    
+
+    
+
+    
+    <li>
+      <a href="mailto:lherman.cs@gmail.com" data-animate-hover="pulse" class="email">
+        <i class="fa fa-envelope" title="email"></i>
+        <span class="screen-reader-text">email</span>
+      </a>
+    </li>
+    
+
+    
+    <li>
+      <a href="https://www.linkedin.com/in/lukas-herman/" data-animate-hover="pulse" class="linkedin" target="_blank">
+        <i class="fa fa-linkedin" title="linkedin"></i>
+        <span class="screen-reader-text">linkedin</span>
+      </a>
+    </li>
+    
+
+    
+    <li>
+      <a href="https://stackoverflow.com/users/8177592/lukas-herman" data-animate-hover="pulse" class="stackoverflow" target="_blank">
+        <i class="fa fa-stack-overflow" title="stackoverflow"></i>
+        <span class="screen-reader-text">stackoverflow</span>
+      </a>
+    </li>
+    
+
+
+    
+    <li>
+      <a href="https://github.com/lherman-cs" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fa fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://blog.lukas-coding.us/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fa fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Coding and Life </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Thoughts, stories, and ideas.</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li id="menu-item" class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://blog.lukas-coding.us/">Home</a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://images.unsplash.com/photo-1493946740644-2d8a1f1a6aff?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ&amp;s=2a42149bdadb9808b62d87f71f08dab1">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">16 June</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://lukas-coding.us" title="Posts by Lukas Herman" rel="author">Lukas Herman</a>
+          </span>
+
+
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> Minimal Go Docker Container (122x smaller)</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              
+
+<p>Before we talk about how to make a small Go container, I want to talk a little bit about why we need it in the first place. According to Abby, an AWS evangelist, &ldquo;smaller images mean faster build, and faster deploys. This also means a smaller attack surface&rdquo; (check her video out <a href="https://www.youtube.com/watch?v=pPsREQbf3PA&amp;t=8s">here</a>). This brings us to these 3 important points:</p>
+
+<ul>
+<li>Speed</li>
+<li>Security</li>
+<li>Stability (This is an implicit benefit from the previous 2 points)</li>
+</ul>
+
+<p>This is great, right? So, let&rsquo;s get started!</p>
+
+<h2 id="original-go-code">Original Go Code</h2>
+
+<p>Following is a simple http server that will basically print &ldquo;Hello world&rdquo; on your browser.</p>
+
+<p><em>github.com/lherman-cs/scratch/app.go</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;log&#34;</span>
+	<span class="s">&#34;net/http&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">handler</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">w</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;Hello world&#34;</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">http</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
+	<span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
+<span class="p">}</span></code></pre></div>
+<p>If we run the code:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">go run app.go</code></pre></div>
+<p>We would see the output as follow:
+<img src="/uploads/Screenshot-from-2018-06-16-21-38-11.png" alt="" /></p>
+
+<h2 id="naïve-way-to-dockerize-our-simple-web-server">Naïve Way to Dockerize Our Simple Web Server</h2>
+
+<p><em>github.com/lherman-cs/scratch/Dockerfile.naive</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-docker" data-lang="docker"><span class="k">FROM</span><span class="s"> golang:1.10.3</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /go/src/app</span><span class="err">
+</span><span class="err"></span>COPY . .<span class="err">
+</span><span class="err"></span><span class="k">RUN</span> go build<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">EXPOSE</span><span class="s"> 8080</span><span class="err">
+</span><span class="err"></span><span class="k">ENTRYPOINT</span><span class="s"> [ &#34;./app&#34; ]</span></code></pre></div>
+<p>This Dockerfile is fine. It will run as expected. But, if you check the size of this image, you will see that this simple image takes <strong>a lot of storage</strong> unnecessarily.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">docker images</code></pre></div>
+<p><img src="/uploads/Screenshot-from-2018-06-16-21-57-46.png" alt="" /></p>
+
+<p>Yup! You see that right. It&rsquo;s 801MB. Can we improve that? Absolutely!</p>
+
+<h2 id="optimization-1-use-a-smaller-base-image">Optimization #1: Use a Smaller Base Image</h2>
+
+<p><em>github.com/lherman-cs/scratch/Dockerfile.alpine</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-docker" data-lang="docker"><span class="k">FROM</span><span class="s"> golang:1.10.3-alpine</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /go/src/app</span><span class="err">
+</span><span class="err"></span>COPY . .<span class="err">
+</span><span class="err"></span><span class="k">RUN</span> go build<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">EXPOSE</span><span class="s"> 8080</span><span class="err">
+</span><span class="err"></span><span class="k">ENTRYPOINT</span><span class="s"> [ &#34;./app&#34; ]</span></code></pre></div>
+<p><em>Note: Notice that the base image changed to</em> <strong>golang:1.10.3-alpine</strong>
+This time, we simply changed the base image with a smaller image. The result is quite impressive!</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">docker images</code></pre></div>
+<p><img src="/uploads/Screenshot-from-2018-06-16-21-58-32.png" alt="" /></p>
+
+<p>From 801MB to 382MB, we have reduced the size by <strong>2.097x</strong></p>
+
+<h2 id="optimization-2-use-docker-multi-stage-build">Optimization #2: Use Docker Multi-stage Build</h2>
+
+<p><em>github.com/lherman-cs/scratch/Dockerfile.multi</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-docker" data-lang="docker"><span class="k">FROM</span><span class="s"> golang:1.10.3-alpine AS builder</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /go/src/app</span><span class="err">
+</span><span class="err"></span>COPY . .<span class="err">
+</span><span class="err"></span><span class="k">RUN</span> go build<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">FROM</span><span class="s"> alpine</span><span class="err">
+</span><span class="err"></span><span class="k">EXPOSE</span><span class="s"> 8080</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span>COPY --from<span class="o">=</span>builder /go/src/app/app .<span class="err">
+</span><span class="err"></span><span class="k">ENTRYPOINT</span><span class="s"> [ &#34;./app&#34; ]</span></code></pre></div>
+<p>Wait&hellip; Why are there 2 base images? This is multi-stage build. Multi-stage build was introduced in <strong>Docker 17.05</strong>. This feature helps us to yet reduce our image size. <a href="https://docs.docker.com/develop/develop-images/multistage-build/">(read more about multi-stage build)</a>. The idea is to strip off all the dependencies that are needed <strong>only for building</strong> the program.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">docker images</code></pre></div>
+<p><img src="/uploads/Screenshot-from-2018-06-16-22-09-27.png" alt="" /></p>
+
+<p>This way, we have reduced the size by <strong>74.17x</strong></p>
+
+<h2 id="optimization-3-use-a-blank-image">Optimization #3: Use a Blank Image</h2>
+
+<p><em>github.com/lherman-cs/scratch/Dockerfile.blank</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-docker" data-lang="docker"><span class="k">FROM</span><span class="s"> golang:1.10.3-alpine AS builder</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /go/src/app</span><span class="err">
+</span><span class="err"></span>COPY . .<span class="err">
+</span><span class="err"></span><span class="k">RUN</span> <span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span> go build<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">FROM</span><span class="s"> scratch</span><span class="err">
+</span><span class="err"></span><span class="k">EXPOSE</span><span class="s"> 8080</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span>COPY --from<span class="o">=</span>builder /go/src/app/app .<span class="err">
+</span><span class="err"></span><span class="k">ENTRYPOINT</span><span class="s"> [ &#34;./app&#34; ]</span></code></pre></div>
+<p>_Note: CGO<em>ENABLED=0 is to remove C dependencies</em></p>
+
+<p>Since Go is statically compiled, we know that Go programs have zero dependencies. Therefore, we can yet strip off all OS dependecies. Here, we use &ldquo;scratch&rdquo; as the base image. <strong>Scratch</strong> is the blank image, from which all other images built upon. By loading the go binary into this scratch image, we&rsquo;ll have a fully functional docker container with a very minimal size.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">docker images</code></pre></div>
+<p><img src="/uploads/Screenshot-from-2018-06-16-22-27-36.png" alt="" /></p>
+
+<p>Finally, using this approach, we reduced the image size by <strong>122.01x</strong></p>
+
+<h1 id="summary">Summary</h1>
+
+<p><img src="/uploads/Screenshot-from-2018-06-16-22-32-34.png" alt="" /></p>
+
+<p>In this article, we&rsquo;ve successfully reduced our simple go web server image from <strong>801MB</strong> to just <strong>6.56MB</strong>. This will not only save your storage. This also means that you can download and deploy this container approximately <strong>122.01x faster</strong> (ignoring the download and deployment overhead). Again, smaller images <strong>are faster, more secure, and more stable.</strong></p>
+
+<p><em>Check out the source code</em> <a href="https://github.com/lherman-cs/scratch">here</a></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+    <img alt='Lukas Herman' src="https://www.gravatar.com/avatar/521ddcdc54f3199e967aed680fa73e4e?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://lukas-coding.us" title="Posts by Lukas Herman" rel="author">Lukas Herman</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      
+	
+      
+      <a class="facebook" target="_blank"
+      href="https://www.facebook.com/lukashadiyanto">
+      <i class="fa fa-facebook"
+      title="facebook icon"></i>
+    </a>
+    
+
+    
+
+
+  
+  <a class="twitter" target="_blank"
+  href="https://twitter.com/lherman_cs">
+  <i class="fa fa-twitter-square"
+  title="twitter icon"></i>
+</a>
+
+
+<a class="linkedin" target="_blank"
+href="https://www.linkedin.com/in/lukas-herman/">
+<i class="fa fa-linkedin-square"
+title="linkedin icon"></i>
+</a>
+
+
+
+<a class="email" target="_blank"
+href="mailto:lherman.cs@gmail.com">
+<i class="fa fa-envelope"
+title="email icon"></i>
+</a>
+
+
+
+
+
+<a class="stackoverflow" target="_blank"
+href="https://stackoverflow.com/users/8177592/lukas-herman">
+<i class="fa fa-stack-overflow"
+title="stackoverflow icon"></i>
+</a>
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/lherman-cs">
+<i class="fa fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Coding and Life </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Thoughts, stories, and ideas.</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+				<li>
+					<a class="facebook" target="_blank"
+					   href="https://www.facebook.com/lukashadiyanto" >
+						<i class="fa fa-facebook" title="facebook"></i>
+						<span class="screen-reader-text">facebook</span>
+					</a>
+				</li>
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://twitter.com/lherman_cs"  class="twitter" target="_blank">
+            <i class="fa fa-twitter-square" title="twitter"></i>
+            <span class="screen-reader-text">twitter</span>
+        </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+        <a href="mailto:lherman.cs@gmail.com"  class="email">
+            <i class="fa fa-envelope" title="email"></i>
+            <span class="screen-reader-text">email</span>
+        </a>
+        </li>
+        
+
+        
+        <li>
+        <a href="https://www.linkedin.com/in/lukas-herman/" class="linkedin" target="_blank">
+            <i class="fa fa-linkedin" title="linkedin"></i>
+            <span class="screen-reader-text">linkedin</span>
+        </a>
+        </li>
+        
+
+        
+        <li>
+        <a href="https://stackoverflow.com/users/8177592/lukas-herman"  class="stackoverflow" target="_blank">
+            <i class="fa fa-stack-overflow" title="stackoverflow"></i>
+            <span class="screen-reader-text">stackoverflow</span>
+        </a>
+        </li>
+        
+
+
+        
+        <li>
+        <a href="https://github.com/lherman-cs"  class="github" target="_blank">
+            <i class="fa fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://blog.lukas-coding.us/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fa fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>&copy; 2018 Lukas Herman</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://blog.lukas-coding.us/js/jquery.min.js"></script>
+<script src="https://blog.lukas-coding.us/js/jquerymigrate.js"></script>
+<script src="https://blog.lukas-coding.us/js/production.min.js"></script>
+
+</body>
+</html>

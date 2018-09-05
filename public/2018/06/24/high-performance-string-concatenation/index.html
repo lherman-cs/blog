@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https://blog.lukas-coding.us/"
+        },
+        "articleSection" : "post",
+        "name" : "High-Performance String Concatenation in Go",
+        "headline" : "High-Performance String Concatenation in Go",
+        "description" : "Go is a great and powerful programming language as well as my personal favorite. It&rsquo;s statically compiled, high performant, and great at concurrent computing. Even so, it&rsquo;s still the programmer&rsquo;s responsibility to utilize the programming language&rsquo;s strength fully.
+In this post, I&rsquo;ll talk about how to concatenate strings efficiently. As usual, we&rsquo;ll start with the naive approach and slowly improve upon it.
+In every approach, I averaged 30 trials for each n.",
+        "inLanguage" : "en",
+        "author" : "",
+        "creator" : "",
+        "publisher": "",
+        "accountablePerson" : "",
+        "copyrightHolder" : "",
+        "copyrightYear" : "2018",
+        "datePublished": "2018-06-24 00:20:16 -0400 EDT",
+        "dateModified" : "2018-06-24 00:20:16 -0400 EDT",
+        "url" : "https://blog.lukas-coding.us/2018/06/24/high-performance-string-concatenation/",
+        "wordCount" : "959",
+        "image" : https://blog.lukas-coding.us/https://images.unsplash.com/photo-1489731007795-388eee095ff6?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ&amp;s=e102b8ebf11546682d2efaa2a070c6c0",
+        "keywords" : [ "Blog" ]   
+    }
+    </script>
+
+
+ <title>High-Performance String Concatenation in Go </title>
+
+
+<meta name="description" content="Describe your website" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="//fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+<link rel="stylesheet" href="https://blog.lukas-coding.us/css/font-awesome.min.css" type='text/css' media='all'>
+
+<link href="https://blog.lukas-coding.us/css/style.css" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://blog.lukas-coding.us/css/custom.css" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://blog.lukas-coding.us/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://blog.lukas-coding.us/img/favicon.ico" type="image/x-icon">
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-111663256-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fa fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+    <li>
+      <a href="https://www.facebook.com/lukashadiyanto" data-animate-hover="pulse" class="facebook" target="_blank">
+        <i class="fa fa-facebook-square" title="facebook"></i>
+        <span class="screen-reader-text">facebook</span>
+      </a>
+    </li>
+    
+
+    
+
+    
+    <li>
+      <a href="https://twitter.com/lherman_cs" data-animate-hover="pulse" class="twitter" target="_blank">
+        <i class="fa fa-twitter-square" title="twitter"></i>
+        <span class="screen-reader-text">twitter</span>
+      </a>
+    </li>
+    
+
+    
+
+    
+    <li>
+      <a href="mailto:lherman.cs@gmail.com" data-animate-hover="pulse" class="email">
+        <i class="fa fa-envelope" title="email"></i>
+        <span class="screen-reader-text">email</span>
+      </a>
+    </li>
+    
+
+    
+    <li>
+      <a href="https://www.linkedin.com/in/lukas-herman/" data-animate-hover="pulse" class="linkedin" target="_blank">
+        <i class="fa fa-linkedin" title="linkedin"></i>
+        <span class="screen-reader-text">linkedin</span>
+      </a>
+    </li>
+    
+
+    
+    <li>
+      <a href="https://stackoverflow.com/users/8177592/lukas-herman" data-animate-hover="pulse" class="stackoverflow" target="_blank">
+        <i class="fa fa-stack-overflow" title="stackoverflow"></i>
+        <span class="screen-reader-text">stackoverflow</span>
+      </a>
+    </li>
+    
+
+
+    
+    <li>
+      <a href="https://github.com/lherman-cs" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fa fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://blog.lukas-coding.us/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fa fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Coding and Life </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Thoughts, stories, and ideas.</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li id="menu-item" class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://blog.lukas-coding.us/">Home</a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://images.unsplash.com/photo-1489731007795-388eee095ff6?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ&amp;s=e102b8ebf11546682d2efaa2a070c6c0">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">24 June</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://lukas-coding.us" title="Posts by Lukas Herman" rel="author">Lukas Herman</a>
+          </span>
+
+
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> High-Performance String Concatenation in Go</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              
+
+<p>Go is a great and powerful programming language as well as my personal favorite. It&rsquo;s statically compiled, high performant, and great at concurrent computing. Even so, it&rsquo;s still the programmer&rsquo;s responsibility to utilize the programming language&rsquo;s strength fully.</p>
+
+<p>In this post, I&rsquo;ll talk about how to concatenate strings efficiently. As usual, we&rsquo;ll start with the naive approach and slowly improve upon it.</p>
+
+<p>In every approach, I averaged <strong>30 trials</strong> for each <em>n</em>. Also, <code>word</code>, the word we are concatenating, is always my name, &ldquo;Lukas&rdquo;. If you&rsquo;re not interested in the details, you can skip to the end to see the charts. ?</p>
+
+<h2 id="naive-way-use-operator">Naive Way: Use &lsquo;+&rsquo; operator</h2>
+
+<p>The most straightforward and possibly intuitive way to concatenate strings is to use the &lsquo;+&rsquo; operator, but, this is not the best way.</p>
+
+<p><a href="https://github.com/lherman-cs/string-builder/blob/master/naive.go">https://github.com/lherman-cs/string-builder/blob/master/naive.go</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nx">concat</span><span class="p">(</span><span class="nx">word</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;&#34;</span>
+	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="nx">s</span> <span class="o">+=</span> <span class="nx">word</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">s</span>
+<span class="p">}</span></code></pre></div>
+<p>The problem with this approach is that strings, in most languages including Go, are <strong>immutable</strong>. Meaning, everytime you concatenate strings, it will actually create a new string that contains &ldquo;old_string&rdquo; + &ldquo;new_string&rdquo; and then delete the &ldquo;old_string&rdquo;.</p>
+
+<p><img src="/uploads/naive.png" alt="" /></p>
+
+<p><em>Disclaimer: This illustration is not an actual memory map. This functions to help to understand what&rsquo;s going on under the &lsquo;+&rsquo; operator</em></p>
+
+<p>As you can see from the picture above, this approach can be very expensive, especially when <code>s</code> is a very large string.</p>
+
+<h3 id="n-vs-time-s"><em>n</em> vs <em>time(s)</em></h3>
+
+<table>
+<thead>
+<tr>
+<th align="center">n</th>
+<th align="center">Naive</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">10</td>
+<td align="center">6.702e-7</td>
+</tr>
+
+<tr>
+<td align="center">100</td>
+<td align="center">1.784e-5</td>
+</tr>
+
+<tr>
+<td align="center">1000</td>
+<td align="center">8.618e-4</td>
+</tr>
+
+<tr>
+<td align="center">10000</td>
+<td align="center">0.038</td>
+</tr>
+
+<tr>
+<td align="center">100000</td>
+<td align="center">3.658</td>
+</tr>
+
+<tr>
+<td align="center">1000000</td>
+<td align="center">317.979</td>
+</tr>
+
+<tr>
+<td align="center">10000000</td>
+<td align="center">-</td>
+</tr>
+
+<tr>
+<td align="center">100000000</td>
+<td align="center">-</td>
+</tr>
+</tbody>
+</table>
+
+<p><em>n = 10000000 and n = 100000000 are painfully slow. So, I skipped them&hellip;</em></p>
+
+<h2 id="optimization-1-use-a-string-slice">Optimization #1: Use a string slice</h2>
+
+<p>The first thing that we can do to avoid that unnecessary copying intrinsic in the naive way, is to store the strings in a Go slice.</p>
+
+<p><a href="https://github.com/lherman-cs/string-builder/blob/master/opt1.go">https://github.com/lherman-cs/string-builder/blob/master/opt1.go</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nx">concat</span><span class="p">(</span><span class="nx">word</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">sb</span> <span class="p">[]</span><span class="kt">string</span>
+
+	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="nx">sb</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">sb</span><span class="p">,</span> <span class="nx">word</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Join</span><span class="p">(</span><span class="nx">sb</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
+<span class="p">}</span></code></pre></div>
+<p><img src="/uploads/opt1-1.png" alt="" /></p>
+
+<p>This way, instead of repetitively copying and deleting, which wastes CPU cycles unnecessary, we basically append the new string to the array and join them at the end.</p>
+
+<p><em>Disclaimer: This illustration is not an actual memory map.</em></p>
+
+<h3 id="n-vs-time-s-1"><em>n</em> vs <em>time(s)</em></h3>
+
+<table>
+<thead>
+<tr>
+<th align="center">n</th>
+<th align="center">Naive</th>
+<th align="center">Opt 1</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">10</td>
+<td align="center">6.702e-7</td>
+<td align="center">3.601e-6</td>
+</tr>
+
+<tr>
+<td align="center">100</td>
+<td align="center">1.784e-5</td>
+<td align="center">1.142e-5</td>
+</tr>
+
+<tr>
+<td align="center">1000</td>
+<td align="center">8.618e-4</td>
+<td align="center">8.172e-5</td>
+</tr>
+
+<tr>
+<td align="center">10000</td>
+<td align="center">0.038</td>
+<td align="center">7.857e-4</td>
+</tr>
+
+<tr>
+<td align="center">100000</td>
+<td align="center">3.658</td>
+<td align="center">0.007</td>
+</tr>
+
+<tr>
+<td align="center">1000000</td>
+<td align="center">317.979</td>
+<td align="center">0.127</td>
+</tr>
+
+<tr>
+<td align="center">10000000</td>
+<td align="center">-</td>
+<td align="center">1.153</td>
+</tr>
+
+<tr>
+<td align="center">100000000</td>
+<td align="center">-</td>
+<td align="center">12.574</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="optimization-2-use-a-byte-slice-instead">Optimization #2: Use a byte slice instead</h2>
+
+<p>In the previous approach, we had a string slice, here we are leveraging the byte slice instead. Since a character is a byte, the byte slice represents an array of characters.</p>
+
+<p>Since strings are actually arrays of characters, using a string slice is still expensive, because it is a 2-D array, which is more complex and has more associated overhead than its 1-D representation.</p>
+
+<p>Another problem with the previous approach is
+<code>strings.Join(sb, &quot;&quot;)</code>, because joining strings is quite expensive. To read more details about how this approach can optimize the code further, please check out <a href="https://medium.com/@felipedutratine/in-golang-should-i-work-with-bytes-or-strings-8bd1f5a7fd48">this article</a>. It&rsquo;s a great article!</p>
+
+<p>The byte as opposed to string slice optimizes the Join function as well as takes us from 2-D to 1-D.</p>
+
+<p><a href="https://github.com/lherman-cs/string-builder/blob/master/opt2.go">https://github.com/lherman-cs/string-builder/blob/master/opt2.go</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nx">concat</span><span class="p">(</span><span class="nx">word</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">sb</span> <span class="p">[]</span><span class="kt">byte</span>
+
+	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="nx">sb</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">sb</span><span class="p">,</span> <span class="nx">word</span><span class="o">...</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">sb</span><span class="p">)</span>
+<span class="p">}</span></code></pre></div>
+<p>In <code>sb = append(sb, word...)</code>, the syntax <code>word...</code> tells Go to unpack the string.</p>
+
+<h3 id="n-vs-time-s-2"><em>n</em> vs <em>time(s)</em></h3>
+
+<table>
+<thead>
+<tr>
+<th align="center">n</th>
+<th align="center">Naive</th>
+<th align="center">Opt 1</th>
+<th align="center">Opt 2</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">10</td>
+<td align="center">6.702e-7</td>
+<td align="center">3.601e-6</td>
+<td align="center">9.489e-7</td>
+</tr>
+
+<tr>
+<td align="center">100</td>
+<td align="center">1.784e-5</td>
+<td align="center">1.142e-5</td>
+<td align="center">6.011e-6</td>
+</tr>
+
+<tr>
+<td align="center">1000</td>
+<td align="center">8.618e-4</td>
+<td align="center">8.172e-5</td>
+<td align="center">4.097e-5</td>
+</tr>
+
+<tr>
+<td align="center">10000</td>
+<td align="center">0.038</td>
+<td align="center">7.857e-4</td>
+<td align="center">3.439e-4</td>
+</tr>
+
+<tr>
+<td align="center">100000</td>
+<td align="center">3.658</td>
+<td align="center">0.007</td>
+<td align="center">0.001</td>
+</tr>
+
+<tr>
+<td align="center">1000000</td>
+<td align="center">317.979</td>
+<td align="center">0.127</td>
+<td align="center">0.007</td>
+</tr>
+
+<tr>
+<td align="center">10000000</td>
+<td align="center">-</td>
+<td align="center">1.153</td>
+<td align="center">0.072</td>
+</tr>
+
+<tr>
+<td align="center">100000000</td>
+<td align="center">-</td>
+<td align="center">12.574</td>
+<td align="center">0.639</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="optimization-3-replace-string-with-byte">Optimization #3: Replace string with []byte</h2>
+
+<p>If you paid attention to the previous code, there&rsquo;s actually another small optimization we can make. We still wasted the CPU cycles to convert a string to []byte and the other way around. For more information about why this is slow, please check out <a href="https://syslog.ravelin.com/byte-vs-string-in-go-d645b67ca7ff">this article</a>.</p>
+
+<p><a href="https://github.com/lherman-cs/string-builder/blob/master/opt3.go">https://github.com/lherman-cs/string-builder/blob/master/opt3.go</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nx">concat</span><span class="p">(</span><span class="nx">word</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">byte</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">sb</span> <span class="p">[]</span><span class="kt">byte</span>
+
+	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="nx">sb</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">sb</span><span class="p">,</span> <span class="nx">word</span><span class="o">...</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">sb</span>
+<span class="p">}</span></code></pre></div>
+<p><em>Note: Notice that now</em> <code>_concat_</code> <em>doesn&rsquo;t return string anymore. This might be not what you want to use in your application.</em></p>
+
+<h3 id="n-vs-time-s-3"><em>n</em> vs <em>time(s)</em></h3>
+
+<table>
+<thead>
+<tr>
+<th align="center">n</th>
+<th align="center">Naive</th>
+<th align="center">Opt 1</th>
+<th align="center">Opt 2</th>
+<th align="center">Opt 3</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">10</td>
+<td align="center">6.702e-7</td>
+<td align="center">3.601e-6</td>
+<td align="center">9.489e-7</td>
+<td align="center">5.009e-7</td>
+</tr>
+
+<tr>
+<td align="center">100</td>
+<td align="center">1.784e-5</td>
+<td align="center">1.142e-5</td>
+<td align="center">6.011e-6</td>
+<td align="center">3.053e-6</td>
+</tr>
+
+<tr>
+<td align="center">1000</td>
+<td align="center">8.618e-4</td>
+<td align="center">8.172e-5</td>
+<td align="center">4.097e-5</td>
+<td align="center">5.042e-5</td>
+</tr>
+
+<tr>
+<td align="center">10000</td>
+<td align="center">0.038</td>
+<td align="center">7.857e-4</td>
+<td align="center">3.439e-4</td>
+<td align="center">2.919e-4</td>
+</tr>
+
+<tr>
+<td align="center">100000</td>
+<td align="center">3.658</td>
+<td align="center">0.007</td>
+<td align="center">0.001</td>
+<td align="center">0.001</td>
+</tr>
+
+<tr>
+<td align="center">1000000</td>
+<td align="center">317.979</td>
+<td align="center">0.127</td>
+<td align="center">0.007</td>
+<td align="center">0.007</td>
+</tr>
+
+<tr>
+<td align="center">10000000</td>
+<td align="center">-</td>
+<td align="center">1.153</td>
+<td align="center">0.072</td>
+<td align="center">0.063</td>
+</tr>
+
+<tr>
+<td align="center">100000000</td>
+<td align="center">-</td>
+<td align="center">12.574</td>
+<td align="center">0.639</td>
+<td align="center">0.584</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="charts">Charts</h1>
+
+<p><img src="/uploads/Screenshot-from-2018-06-24-16-50-54.png" alt="" /></p>
+
+<p><img src="/uploads/Screenshot-from-2018-06-24-16-51-47.png" alt="" /></p>
+
+<p><img src="/uploads/Screenshot-from-2018-06-24-16-52-28.png" alt="" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>In this article, we&rsquo;ve improved the performance, when <code>n = 1000000</code>, by <strong>45425x</strong>. So, whenever you do a lot of string concatenations, don&rsquo;t use &lsquo;+&rsquo; operator. Use <code>\[\]byte</code> instead of a <code>string</code>. Also, if you notice, the Go standard library uses <code>\[\]byte</code> more often for its performance and flexibility!</p>
+
+<p>You can apply this technique to <strong>any programming language</strong>.</p>
+
+<p>As always, you can always check out the full code <a href="https://github.com/lherman-cs/string-builder">here</a></p>
+
+<hr />
+
+<h1 id="extra">Extra</h1>
+
+<p>If you don&rsquo;t want to do the optimization yourself, Go has a standard library that does string concatenation pretty efficiently. You can go to <a href="https://golang.org/pkg/strings/#Builder">this link</a> for more details.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nx">concat</span><span class="p">(</span><span class="nx">word</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">sb</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Builder</span>
+
+	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="nx">sb</span><span class="p">.</span><span class="nx">Write</span><span class="p">(</span><span class="nx">word</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">sb</span><span class="p">.</span><span class="nx">String</span><span class="p">()</span>
+<span class="p">}</span></code></pre></div>
+<p>Here we compare optimization #3 to the standard library, <code>strings.Builder</code>.</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">n</th>
+<th align="center">Opt 3</th>
+<th align="center">Std</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">10</td>
+<td align="center">5.009e-7</td>
+<td align="center">8.862e-7</td>
+</tr>
+
+<tr>
+<td align="center">100</td>
+<td align="center">3.053e-6</td>
+<td align="center">7.074e-6</td>
+</tr>
+
+<tr>
+<td align="center">1000</td>
+<td align="center">5.042e-5</td>
+<td align="center">4.974e-5</td>
+</tr>
+
+<tr>
+<td align="center">10000</td>
+<td align="center">2.919e-4</td>
+<td align="center">5.033e-4</td>
+</tr>
+
+<tr>
+<td align="center">100000</td>
+<td align="center">0.001</td>
+<td align="center">0.002</td>
+</tr>
+
+<tr>
+<td align="center">1000000</td>
+<td align="center">0.007</td>
+<td align="center">0.012</td>
+</tr>
+
+<tr>
+<td align="center">10000000</td>
+<td align="center">0.063</td>
+<td align="center">0.111</td>
+</tr>
+
+<tr>
+<td align="center">100000000</td>
+<td align="center">0.584</td>
+<td align="center">1.070</td>
+</tr>
+</tbody>
+</table>
+
+<p><img src="/uploads/Screenshot-from-2018-06-24-16-59-55.png" alt="" /></p>
+
+<p>For <code>n=100000000</code> our optimization #3 is nearly <strong>2x</strong> as fast as the Go standard library version.</p>
+
+<p><em>Note: This may be because the standard library must be more generalized, which causes overheads.</em></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+    <img alt='Lukas Herman' src="https://www.gravatar.com/avatar/521ddcdc54f3199e967aed680fa73e4e?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://lukas-coding.us" title="Posts by Lukas Herman" rel="author">Lukas Herman</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      
+	
+      
+      <a class="facebook" target="_blank"
+      href="https://www.facebook.com/lukashadiyanto">
+      <i class="fa fa-facebook"
+      title="facebook icon"></i>
+    </a>
+    
+
+    
+
+
+  
+  <a class="twitter" target="_blank"
+  href="https://twitter.com/lherman_cs">
+  <i class="fa fa-twitter-square"
+  title="twitter icon"></i>
+</a>
+
+
+<a class="linkedin" target="_blank"
+href="https://www.linkedin.com/in/lukas-herman/">
+<i class="fa fa-linkedin-square"
+title="linkedin icon"></i>
+</a>
+
+
+
+<a class="email" target="_blank"
+href="mailto:lherman.cs@gmail.com">
+<i class="fa fa-envelope"
+title="email icon"></i>
+</a>
+
+
+
+
+
+<a class="stackoverflow" target="_blank"
+href="https://stackoverflow.com/users/8177592/lukas-herman">
+<i class="fa fa-stack-overflow"
+title="stackoverflow icon"></i>
+</a>
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/lherman-cs">
+<i class="fa fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Coding and Life </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Thoughts, stories, and ideas.</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+				<li>
+					<a class="facebook" target="_blank"
+					   href="https://www.facebook.com/lukashadiyanto" >
+						<i class="fa fa-facebook" title="facebook"></i>
+						<span class="screen-reader-text">facebook</span>
+					</a>
+				</li>
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://twitter.com/lherman_cs"  class="twitter" target="_blank">
+            <i class="fa fa-twitter-square" title="twitter"></i>
+            <span class="screen-reader-text">twitter</span>
+        </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+        <a href="mailto:lherman.cs@gmail.com"  class="email">
+            <i class="fa fa-envelope" title="email"></i>
+            <span class="screen-reader-text">email</span>
+        </a>
+        </li>
+        
+
+        
+        <li>
+        <a href="https://www.linkedin.com/in/lukas-herman/" class="linkedin" target="_blank">
+            <i class="fa fa-linkedin" title="linkedin"></i>
+            <span class="screen-reader-text">linkedin</span>
+        </a>
+        </li>
+        
+
+        
+        <li>
+        <a href="https://stackoverflow.com/users/8177592/lukas-herman"  class="stackoverflow" target="_blank">
+            <i class="fa fa-stack-overflow" title="stackoverflow"></i>
+            <span class="screen-reader-text">stackoverflow</span>
+        </a>
+        </li>
+        
+
+
+        
+        <li>
+        <a href="https://github.com/lherman-cs"  class="github" target="_blank">
+            <i class="fa fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://blog.lukas-coding.us/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fa fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>&copy; 2018 Lukas Herman</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://blog.lukas-coding.us/js/jquery.min.js"></script>
+<script src="https://blog.lukas-coding.us/js/jquerymigrate.js"></script>
+<script src="https://blog.lukas-coding.us/js/production.min.js"></script>
+
+</body>
+</html>

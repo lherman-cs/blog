@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https://blog.lukas-coding.us/"
+        },
+        "articleSection" : "post",
+        "name" : "Python Decorator",
+        "headline" : "Python Decorator",
+        "description" : "Decorator is a very useful and powerful syntax that Python developers came up with in Python 2.4 through PEP 318 proposal. Since then, many powerful libraries started using this extensively. These libraries including Flask, Django, AioHTTP, Sanic, and so on&hellip; You got the point. Python decorator is powerful!
+Flask (quoted directly from the official page)
+from flask import Flask app = Flask(__name__) @app.route(&#34;/&#34;) def hello(): return &#34;Hello World!&#34; Note: app.",
+        "inLanguage" : "en",
+        "author" : "",
+        "creator" : "",
+        "publisher": "",
+        "accountablePerson" : "",
+        "copyrightHolder" : "",
+        "copyrightYear" : "2018",
+        "datePublished": "2018-07-02 04:22:57 -0400 EDT",
+        "dateModified" : "2018-07-02 04:22:57 -0400 EDT",
+        "url" : "https://blog.lukas-coding.us/2018/07/02/python-decorator/",
+        "wordCount" : "1300",
+        "image" : https://blog.lukas-coding.us/https://images.unsplash.com/photo-1513042966058-0ac1891fdc2d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ&amp;s=811dd33449166725062598c12718894c",
+        "keywords" : [ "Blog" ]   
+    }
+    </script>
+
+
+ <title>Python Decorator </title>
+
+
+<meta name="description" content="Describe your website" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="//fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+<link rel="stylesheet" href="https://blog.lukas-coding.us/css/font-awesome.min.css" type='text/css' media='all'>
+
+<link href="https://blog.lukas-coding.us/css/style.css" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://blog.lukas-coding.us/css/custom.css" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://blog.lukas-coding.us/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://blog.lukas-coding.us/img/favicon.ico" type="image/x-icon">
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-111663256-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fa fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+    <li>
+      <a href="https://www.facebook.com/lukashadiyanto" data-animate-hover="pulse" class="facebook" target="_blank">
+        <i class="fa fa-facebook-square" title="facebook"></i>
+        <span class="screen-reader-text">facebook</span>
+      </a>
+    </li>
+    
+
+    
+
+    
+    <li>
+      <a href="https://twitter.com/lherman_cs" data-animate-hover="pulse" class="twitter" target="_blank">
+        <i class="fa fa-twitter-square" title="twitter"></i>
+        <span class="screen-reader-text">twitter</span>
+      </a>
+    </li>
+    
+
+    
+
+    
+    <li>
+      <a href="mailto:lherman.cs@gmail.com" data-animate-hover="pulse" class="email">
+        <i class="fa fa-envelope" title="email"></i>
+        <span class="screen-reader-text">email</span>
+      </a>
+    </li>
+    
+
+    
+    <li>
+      <a href="https://www.linkedin.com/in/lukas-herman/" data-animate-hover="pulse" class="linkedin" target="_blank">
+        <i class="fa fa-linkedin" title="linkedin"></i>
+        <span class="screen-reader-text">linkedin</span>
+      </a>
+    </li>
+    
+
+    
+    <li>
+      <a href="https://stackoverflow.com/users/8177592/lukas-herman" data-animate-hover="pulse" class="stackoverflow" target="_blank">
+        <i class="fa fa-stack-overflow" title="stackoverflow"></i>
+        <span class="screen-reader-text">stackoverflow</span>
+      </a>
+    </li>
+    
+
+
+    
+    <li>
+      <a href="https://github.com/lherman-cs" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fa fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://blog.lukas-coding.us/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fa fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Coding and Life </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Thoughts, stories, and ideas.</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li id="menu-item" class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://blog.lukas-coding.us/">Home</a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://images.unsplash.com/photo-1513042966058-0ac1891fdc2d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ&amp;s=811dd33449166725062598c12718894c">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">02 July</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://lukas-coding.us" title="Posts by Lukas Herman" rel="author">Lukas Herman</a>
+          </span>
+
+
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> Python Decorator</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              
+
+<p>Decorator is a very useful and powerful syntax that Python developers came up with in Python 2.4 through <a href="https://www.python.org/dev/peps/pep-0318/">PEP 318 proposal</a>. Since then, many powerful libraries started using this extensively. These libraries including Flask, Django, AioHTTP, Sanic, and so on&hellip; You got the point. Python decorator is powerful!</p>
+
+<p><em>Flask (quoted directly from the official page)</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&#34;Hello World!&#34;</span></code></pre></div>
+<p><em>Note: <code>app.route(&quot;/&quot;)</code> is a Python decorator</em></p>
+
+<p>You might not know what I&rsquo;m talking about. That&rsquo;s okay! At some point, everybody was a beginner too. In this article, I&rsquo;ll walk you through slowly from the very basic to some advanced topics.</p>
+
+<h2 id="intro">Intro</h2>
+
+<p>Decorator is not a term that Python developers came up with. It is actually one out of design patterns that software engineers use. By definition,</p>
+
+<blockquote>
+<p>Decorator pattern is a design pattern that allows behavior to be added to an individual object, either statically or dynamically, without affecting the behavior of other objects from the same class.</p>
+</blockquote>
+
+<p>In simple term, <strong>decorator dynamically alters a function, method, or class without modifying the original code.</strong></p>
+
+<p>Though, decorator pattern is not necessarily the same with Python decorator. Python&rsquo;s official page says this clearly <a href="https://wiki.python.org/moin/PythonDecorators">here</a>. But, the idea is still similar.</p>
+
+<h1 id="coding">Coding</h1>
+
+<h2 id="original-code">Original Code</h2>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="s1">&#39;&#39;&#39;This is a very complicated function :)&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span></code></pre></div>
+<p>To make this tutorial fun, I have some tasks that you can do to help you understand the topic:</p>
+
+<ul>
+<li>Add printing &ldquo;hello world&rdquo; functionality to <code>add</code> function <strong>without the decorator syntax</strong></li>
+<li>Add printing &ldquo;hello world&rdquo; functionality to <code>add</code> function <strong>with the decorator syntax</strong></li>
+<li>Add a timer functionality to <code>add</code> function <strong>with the decorator syntax</strong></li>
+</ul>
+
+<p>Following are the rules for every task above:</p>
+
+<ul>
+<li>You have to create a new function that accepts the same parameters and return the same thing</li>
+<li>You can&rsquo;t modify the original code, <code>add</code>.</li>
+</ul>
+
+<h2 id="task-1-add-printing-hello-world-functionality-to-add-function-without-the-decorator-syntax">Task #1: Add printing &ldquo;hello world&rdquo; functionality to <code>add</code> function without the decorator syntax</h2>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;hello world&#34;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="s1">&#39;&#39;&#39;This is a very complicated function :)&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="n">decorated</span> <span class="o">=</span> <span class="n">hello</span><span class="p">(</span><span class="n">add</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">decorated</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span></code></pre></div>
+<p>Here, we see that <code>hello</code> accepts a function and store it in <code>fn</code>. Then, we create a new function in <code>hello</code> called <code>wrapper</code>. <code>wrapper</code> is a function that we&rsquo;re <strong>decorating</strong>. We added <code>print(&quot;hello world&quot;)</code> right before we call <code>fn</code> with <code>x</code> and <code>y</code> parameters (<code>fn</code> in this case is the <code>add</code> function). After we run this, we would see that it&rsquo;d print &ldquo;hello world&rdquo; first and then 8 (from <code>add(3, 5)</code>). And that&rsquo;s how we accomplished <strong>task #1</strong>!!</p>
+
+<h2 id="task-2-add-printing-hello-world-functionality-to-add-function-with-the-decorator-syntax">Task #2: Add printing &ldquo;hello world&rdquo; functionality to <code>add</code> function with the decorator syntax</h2>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;hello world&#34;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@hello</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="s1">&#39;&#39;&#39;This is a very complicated function :)&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span></code></pre></div>
+<p><em>Note: there&rsquo;s <code>@hello</code> above the <code>add</code> function</em></p>
+
+<p>As you can see, we didn&rsquo;t change the code much. But, yet, it&rsquo;s much cleaner now. We can even call the original function normally. That&rsquo;s pretty cool, right!? So, what&rsquo;s going on here?</p>
+
+<p>After <a href="https://www.python.org/dev/peps/pep-0318/">PEP381</a> proposal was implemented, this <code>@</code> became a syntax sugar for the code that you saw in <strong>task #1</strong>. Instead of doing <code>decorated = hello(add)</code>, this syntax <strong>decorates</strong> your original function and replace the original function with the decorated function. That way, we can simply call the original function normally but with <strong>extra functionalities</strong>.</p>
+
+<h2 id="task-3-add-a-timer-functionality-to-add-function-with-the-decorator-syntax">Task #3: Add a timer functionality to <code>add</code> function with the decorator syntax</h2>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<span class="k">def</span> <span class="nf">timeit</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;Elapsed: {elapsed:.4e}s&#34;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@timeit</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="s1">&#39;&#39;&#39;This is a very complicated function :)&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span></code></pre></div>
+<p>Here, we use Python&rsquo;s <code>time</code> function from time module. The function is very simple. It basically returns the current timestamp. This is very useful because later on, you can simply subtract the current timestamp with the previous timestamp that you stored before you call a function to get the elapsed time.</p>
+
+<p>In this code, we see a similar pattern, it&rsquo;s just slightly different from the previous version. Here, instead of returning the result right after it&rsquo;s being called, we store the result from the original function in a variable fist and return it later. This has to be done because we want to <strong>calculate the elapsed time after the add <code>function</code> gets called</strong>.</p>
+
+<p>If we run this code, we would see something like below:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">Elapsed: <span class="m">7</span>.1526e-07s
+<span class="m">8</span></code></pre></div>
+<h1 id="appendix">Appendix</h1>
+
+<p>Congratulations! We have just learned a basic understanding of Python decorator. From now on, I&rsquo;ll be talking about some advanced topics. So, if you think that you&rsquo;re still shaky, please review the material multiple times. Learning about this topic is not easy! I&rsquo;ve been in your position. It was tough for me at first.</p>
+
+<h2 id="advance-1-generalize-our-decorator-function">Advance #1: Generalize our decorator function</h2>
+
+<p>If you paid attention to our previous codes, our decorator functions were not flexible enough. They only work if we have the same parameters and return value with our <code>add</code> function. What if we have another function that doesn&rsquo;t have any parameter? Our code won&rsquo;t be able to run!</p>
+
+<p>Luckily, though, Python is very flexible and dynamic. Python has these 2 powerful syntaxes in defining parameters: *args and **kwargs. <code>args</code> and <code>kwargs</code> are just being used because of the naming convention. One asterisk means it accepts an arbitrary amount of parameters. Two asterisks mean it accepts an arbitrary amount of keyword parameters.</p>
+
+<p>Let&rsquo;s see how these 2 syntaxes generalize our decorator function.</p>
+
+<p>Previous:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">timeit</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;Elapsed: {elapsed:.4e}s&#34;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span></code></pre></div>
+<p>After:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">timeit</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;Elapsed: {elapsed:.4e}s&#34;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span></code></pre></div>
+<p>Yes! we only changed <code>x</code> and <code>y</code> to <code>*args</code> and <code>**kwargs</code>. Yet, now we can use our <code>timeit</code> decorator function for <strong>any function</strong>.</p>
+
+<h2 id="advance-2-using-decorator-to-speed-up-your-function">Advance #2: Using decorator to speed up your function</h2>
+
+<p>Following we have a recursive implementation of the fibonacci function:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">fib</span><span class="p">(</span><span class="mi">40</span><span class="p">))</span></code></pre></div>
+<p>On my laptop, this code took <strong>37.62s</strong> to finish. This makes sense because, in the recursion, we keep calling the same function with the same parameter <strong>a lot!</strong> To be a little bit scientific, this implementation is upper bounded by <strong>O(2^n)</strong>.</p>
+
+<p>One of many ways to improve this implementation is to use a global array to store the return value for each call. That way, instead of recursing in, it can just look up the array and see if the value is already in the global array, else recursing in. This technique is called <strong>memoization</strong>. So, instead of having O(2^n) running time complexity, we would have a <strong>O(n)</strong> algorithm. This is great and definitely helpful to increase the performance. But, it&rsquo;s dirty!</p>
+
+<p>Luckily, Python has this awesome decorator function called <code>lru_cache</code>. This function is under the functools module. You can read more details <a href="https://docs.python.org/3/library/functools.html#functools.lru_cache">here</a>.</p>
+
+<p><code>lru_cache</code> basically does the memoization technique, but with a decorator function. Very neat! Here&rsquo;s how to use it:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">fib</span><span class="p">(</span><span class="mi">40</span><span class="p">))</span></code></pre></div>
+
+<p>That&rsquo;s it! Just 2 extra lines of codes! (1 line is even for importing the module, which shouldn&rsquo;t be counted). How&rsquo;s the performance? From <strong>37.62s</strong>, this code only took <strong>0.02s</strong>. That&rsquo;s <strong>1881x</strong> performance!!</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Python decorator is a very powerful feature; it has a lot of use cases, ranging from performance to HTTP routing. It can add a lot of functionalities and performance to your functions without sacrificing the code readability!</p>
+
+<p>As always, you can check out the source code <a href="https://github.com/lherman-cs/blog-python-decorator">here</a>.</p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+    <img alt='Lukas Herman' src="https://www.gravatar.com/avatar/521ddcdc54f3199e967aed680fa73e4e?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://lukas-coding.us" title="Posts by Lukas Herman" rel="author">Lukas Herman</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      
+	
+      
+      <a class="facebook" target="_blank"
+      href="https://www.facebook.com/lukashadiyanto">
+      <i class="fa fa-facebook"
+      title="facebook icon"></i>
+    </a>
+    
+
+    
+
+
+  
+  <a class="twitter" target="_blank"
+  href="https://twitter.com/lherman_cs">
+  <i class="fa fa-twitter-square"
+  title="twitter icon"></i>
+</a>
+
+
+<a class="linkedin" target="_blank"
+href="https://www.linkedin.com/in/lukas-herman/">
+<i class="fa fa-linkedin-square"
+title="linkedin icon"></i>
+</a>
+
+
+
+<a class="email" target="_blank"
+href="mailto:lherman.cs@gmail.com">
+<i class="fa fa-envelope"
+title="email icon"></i>
+</a>
+
+
+
+
+
+<a class="stackoverflow" target="_blank"
+href="https://stackoverflow.com/users/8177592/lukas-herman">
+<i class="fa fa-stack-overflow"
+title="stackoverflow icon"></i>
+</a>
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/lherman-cs">
+<i class="fa fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Coding and Life </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Thoughts, stories, and ideas.</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+				<li>
+					<a class="facebook" target="_blank"
+					   href="https://www.facebook.com/lukashadiyanto" >
+						<i class="fa fa-facebook" title="facebook"></i>
+						<span class="screen-reader-text">facebook</span>
+					</a>
+				</li>
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://twitter.com/lherman_cs"  class="twitter" target="_blank">
+            <i class="fa fa-twitter-square" title="twitter"></i>
+            <span class="screen-reader-text">twitter</span>
+        </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+        <a href="mailto:lherman.cs@gmail.com"  class="email">
+            <i class="fa fa-envelope" title="email"></i>
+            <span class="screen-reader-text">email</span>
+        </a>
+        </li>
+        
+
+        
+        <li>
+        <a href="https://www.linkedin.com/in/lukas-herman/" class="linkedin" target="_blank">
+            <i class="fa fa-linkedin" title="linkedin"></i>
+            <span class="screen-reader-text">linkedin</span>
+        </a>
+        </li>
+        
+
+        
+        <li>
+        <a href="https://stackoverflow.com/users/8177592/lukas-herman"  class="stackoverflow" target="_blank">
+            <i class="fa fa-stack-overflow" title="stackoverflow"></i>
+            <span class="screen-reader-text">stackoverflow</span>
+        </a>
+        </li>
+        
+
+
+        
+        <li>
+        <a href="https://github.com/lherman-cs"  class="github" target="_blank">
+            <i class="fa fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://blog.lukas-coding.us/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fa fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>&copy; 2018 Lukas Herman</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://blog.lukas-coding.us/js/jquery.min.js"></script>
+<script src="https://blog.lukas-coding.us/js/jquerymigrate.js"></script>
+<script src="https://blog.lukas-coding.us/js/production.min.js"></script>
+
+</body>
+</html>

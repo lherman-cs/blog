@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https://blog.lukas-coding.us/"
+        },
+        "articleSection" : "post",
+        "name" : "How to create Debian packages and make a native app for any web app",
+        "headline" : "How to create Debian packages and make a native app for any web app",
+        "description" : "To intro, I am an undergraduate Computer Science student at Clemson University. I was having issues with printing to the Clemson network printers, Clemson has desktop printer client apps for macs and windows machines to be able to print to the network printers but only a web app to print from Linux machines, with no desktop app, therefore I wanted to make one to serve Debian Linux machines.
+I found a wrapper class for being able to wrap most web apps into desktop apps jiahaog/nativefier.",
+        "inLanguage" : "en",
+        "author" : "",
+        "creator" : "",
+        "publisher": "",
+        "accountablePerson" : "",
+        "copyrightHolder" : "",
+        "copyrightYear" : "2018",
+        "datePublished": "2018-01-19 16:50:33 -0400 -0400",
+        "dateModified" : "2018-01-19 16:50:33 -0400 -0400",
+        "url" : "https://blog.lukas-coding.us/2018/01/19/how-to-create-debian-packages-and-make-a-nativeapp-for/",
+        "wordCount" : "780",
+        "image" : https://blog.lukas-coding.us//uploads/bench-accounting-49908.jpg",
+        "keywords" : [ "Blog" ]   
+    }
+    </script>
+
+
+ <title>How to create Debian packages and make a native app for any web app </title>
+
+
+<meta name="description" content="Describe your website" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="//fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+<link rel="stylesheet" href="https://blog.lukas-coding.us/css/font-awesome.min.css" type='text/css' media='all'>
+
+<link href="https://blog.lukas-coding.us/css/style.css" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://blog.lukas-coding.us/css/custom.css" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://blog.lukas-coding.us/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://blog.lukas-coding.us/img/favicon.ico" type="image/x-icon">
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-111663256-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fa fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+    <li>
+      <a href="https://www.facebook.com/lukashadiyanto" data-animate-hover="pulse" class="facebook" target="_blank">
+        <i class="fa fa-facebook-square" title="facebook"></i>
+        <span class="screen-reader-text">facebook</span>
+      </a>
+    </li>
+    
+
+    
+
+    
+    <li>
+      <a href="https://twitter.com/lherman_cs" data-animate-hover="pulse" class="twitter" target="_blank">
+        <i class="fa fa-twitter-square" title="twitter"></i>
+        <span class="screen-reader-text">twitter</span>
+      </a>
+    </li>
+    
+
+    
+
+    
+    <li>
+      <a href="mailto:lherman.cs@gmail.com" data-animate-hover="pulse" class="email">
+        <i class="fa fa-envelope" title="email"></i>
+        <span class="screen-reader-text">email</span>
+      </a>
+    </li>
+    
+
+    
+    <li>
+      <a href="https://www.linkedin.com/in/lukas-herman/" data-animate-hover="pulse" class="linkedin" target="_blank">
+        <i class="fa fa-linkedin" title="linkedin"></i>
+        <span class="screen-reader-text">linkedin</span>
+      </a>
+    </li>
+    
+
+    
+    <li>
+      <a href="https://stackoverflow.com/users/8177592/lukas-herman" data-animate-hover="pulse" class="stackoverflow" target="_blank">
+        <i class="fa fa-stack-overflow" title="stackoverflow"></i>
+        <span class="screen-reader-text">stackoverflow</span>
+      </a>
+    </li>
+    
+
+
+    
+    <li>
+      <a href="https://github.com/lherman-cs" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fa fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://blog.lukas-coding.us/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fa fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Coding and Life </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Thoughts, stories, and ideas.</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li id="menu-item" class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://blog.lukas-coding.us/">Home</a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://blog.lukas-coding.us/uploads/bench-accounting-49908.jpg">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">19 January</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://lukas-coding.us" title="Posts by Lukas Herman" rel="author">Lukas Herman</a>
+          </span>
+
+
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> How to create Debian packages and make a native app for any web app</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              
+
+<p>To intro, I am an undergraduate Computer Science student at Clemson University. I was having issues with printing to the Clemson network printers, Clemson has desktop printer client apps for macs and windows machines to be able to print to the network printers but only a web app to print from Linux machines, with no desktop app, therefore I wanted to make one to serve Debian Linux machines.</p>
+
+<p>I found a wrapper class for being able to wrap most web apps into desktop apps  <a href="https://github.com/jiahaog/nativefier">jiahaog/nativefier</a>. This is an open source project on GitHub. I installed this locally and took the Clemson web app and wrapped it as a desktop app.</p>
+
+<p>Then I wanted to be able to package this for anyone who uses a Debian Linux distro to install with a one-line command, which was surprisingly harder than getting the app itself to work.</p>
+
+<p>In this post, I&rsquo;ll be talking about how to make a native app for any web app and package the app into a Debian package (.deb). Throughout this post, I&rsquo;ll be using <a href="https://www.youtube.com/">YouTube</a> as the web app that I&rsquo;ll convert and package.</p>
+
+<p>So, without further ado, let&rsquo;s get started.</p>
+
+<p><img src="/uploads/Screenshot-from-2018-01-18-14-39-20.png" alt="" />
+<em>Note: YouTube desktop app that we&rsquo;re trying to build</em></p>
+
+<hr />
+
+<h1 id="dependencies">Dependencies</h1>
+
+<p>For the system dependency you just need to install npm and gnome-panel. Then, use npm to install <a href="https://github.com/jiahaog/nativefier">nativefier</a> (a third party nodejs module).</p>
+
+<p><em>Install npm:</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get install -y npm gnome-panel</code></pre></div>
+<p><em>Note: If the installation failed, please refer to</em> <a href="https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions"><em>this official documentation</em></a></p>
+
+<p><em>Install nativefier:</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">sudo npm install -g nativefier</code></pre></div>
+<hr />
+
+<h1 id="steps-how-to-convert-any-web-app-to-a-native-app">Steps how to convert any web app to a native app</h1>
+
+<ol>
+<li>Make a directory for the project (for this post, I&rsquo;ll name it &ldquo;youtube&rdquo;. Feel free to use any name here)</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">   mkdir youtube</code></pre></div>
+<ol>
+<li>Change your directory into the newly created project folder</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">   <span class="nb">cd</span> youtube</code></pre></div>
+<ol>
+<li>Convert YouTube web app to a native app</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">   nativefier --name youtube https://youtube.com</code></pre></div>
+<hr />
+
+<h1 id="steps-how-to-package-the-native-app">Steps how to package the native app</h1>
+
+<p>The hardest part of this section is we need to know how Linux organized applications in the filesystem. There are 3 directories that we need to understand for this particular post:</p>
+
+<ul>
+<li><strong>/usr/share/{package_name}</strong>: our application directory. It contains everything from our application&rsquo;s shared objects, binary files, etc.</li>
+<li><strong>/usr/bin</strong>: where our binary file is (we should make a link to the binary file in /usr/share/{package_name} if it&rsquo;s a dynamically compiled program)</li>
+<li><strong>/usr/share/applications</strong>: where our .desktop file is (this is for making a desktop shortcut).</li>
+</ul>
+
+<p>Understanding the structure is very important in packaging our application because all directories and files within our project folder will be copied relatively to the root. For example, if I have this project tree:</p>
+
+<p><img src="/uploads/Screenshot-from-2018-01-18-19-44-54.png" alt="" /></p>
+
+<p><strong>youtube/usr/bin</strong> will be copied to <strong>/usr/bin</strong>.
+<strong>youtube/usr/share/applications</strong> will be copied to <strong>/usr/share/applications</strong>.
+&hellip;</p>
+
+<p>And so on except <strong>DEBIAN</strong> which will make sense later.</p>
+
+<p>To illustrate the concept, below are the specific steps I need to do for packaging our YouTube app.</p>
+
+<ol>
+<li><p>Make a directory for our application&rsquo;s shared objects, binary file, etc.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">mkdir -p usr/share</code></pre></div></li>
+
+<li><p>Move the generated YouTube native app to the newly created directory:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">mv youtube-linux-x64 usr/share/youtube</code></pre></div></li>
+
+<li><p>Change the permissions for some directories so that it can be read for all users</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">chmod -R +rx usr/share/youtube/resources/app</code></pre></div></li>
+
+<li><p>Make a directory for our application&rsquo;s binary file</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">mkdir -p usr/bin</code></pre></div></li>
+
+<li><p>Change directory to the newly created directory</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nb">cd</span> usr/bin</code></pre></div></li>
+
+<li><p>Make a relative link to our project base&rsquo;s binary file</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">ln -sr ../share/youtube/youtube youtube</code></pre></div></li>
+
+<li><p>Change directory back to the project base directory</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nb">cd</span> ../..</code></pre></div></li>
+
+<li><p>Make a directory for our application&rsquo;s .desktop file</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">mkdir -p usr/share/applications</code></pre></div></li>
+
+<li><p>Change directory to the newly created directory</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nb">cd</span> usr/share/applications</code></pre></div></li>
+
+<li><p>Create a .desktop file</p></li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">gnome-desktop-item-edit --create-new .</code></pre></div>
+<p><img src="/uploads/gnome-panel.png" alt="" /></p>
+
+<ul>
+<li>Name: YouTube (the app&rsquo;s name that will be used as the desktop shortcut).</li>
+<li>Command: youtube (this should be pointing to the binary file).</li>
+<li>Comment: you can leave it blank.</li>
+</ul>
+
+<ol>
+<li>Change directory back to the project base directory</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nb">cd</span> ../../..</code></pre></div>
+<ol>
+<li>Make a directory for <strong>DEBIAN</strong> control (remember that I said all the directories and files will be copied except <strong>DEBIAN</strong>?). <em>Note: DEBIAN folder is used for our package configurations.</em></li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">mkdir -p DEBIAN</code></pre></div>
+<ol>
+<li>Add <strong>control</strong> file into <strong>DEBIAN</strong> directory</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">vim DEBIAN/control</code></pre></div>
+<ol>
+<li><p>Add this into the file</p>
+
+<p>Package: youtube
+Version: 1.0
+Maintainer: Lukas Herman
+Architecture: amd64
+Description: YouTube Desktop App</p></li>
+
+<li><p>Change directory back to one level before our project base directory</p></li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">   <span class="nb">cd</span> ..</code></pre></div>
+<ol>
+<li>Package the YouTube app</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">   fakeroot dpkg-deb --build youtube</code></pre></div>
+<ol>
+<li>That&rsquo;s it! You&rsquo;ll see in your directory there is the debian package called <strong>youtube.deb</strong>.</li>
+</ol>
+
+<hr />
+
+<h1 id="extra">Extra</h1>
+
+<p>If you don&rsquo;t want to do any of these steps, I&rsquo;ve made an automation script <a href="https://github.com/lherman-cs/debian-nativefier">here</a>. You just need to run the script and give necessary information. The script will automatically create a debian package of any converted web app.</p>
+
+<p>Here&rsquo;s the one-line command line:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">git clone git@github.com:lherman-cs/debian-nativefier.git <span class="o">&amp;&amp;</span> <span class="nb">cd</span> debian-nativefier <span class="o">&amp;&amp;</span> ./build.sh </code></pre></div>
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+    <img alt='Lukas Herman' src="https://www.gravatar.com/avatar/521ddcdc54f3199e967aed680fa73e4e?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://lukas-coding.us" title="Posts by Lukas Herman" rel="author">Lukas Herman</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      
+	
+      
+      <a class="facebook" target="_blank"
+      href="https://www.facebook.com/lukashadiyanto">
+      <i class="fa fa-facebook"
+      title="facebook icon"></i>
+    </a>
+    
+
+    
+
+
+  
+  <a class="twitter" target="_blank"
+  href="https://twitter.com/lherman_cs">
+  <i class="fa fa-twitter-square"
+  title="twitter icon"></i>
+</a>
+
+
+<a class="linkedin" target="_blank"
+href="https://www.linkedin.com/in/lukas-herman/">
+<i class="fa fa-linkedin-square"
+title="linkedin icon"></i>
+</a>
+
+
+
+<a class="email" target="_blank"
+href="mailto:lherman.cs@gmail.com">
+<i class="fa fa-envelope"
+title="email icon"></i>
+</a>
+
+
+
+
+
+<a class="stackoverflow" target="_blank"
+href="https://stackoverflow.com/users/8177592/lukas-herman">
+<i class="fa fa-stack-overflow"
+title="stackoverflow icon"></i>
+</a>
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/lherman-cs">
+<i class="fa fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Coding and Life </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Thoughts, stories, and ideas.</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+				<li>
+					<a class="facebook" target="_blank"
+					   href="https://www.facebook.com/lukashadiyanto" >
+						<i class="fa fa-facebook" title="facebook"></i>
+						<span class="screen-reader-text">facebook</span>
+					</a>
+				</li>
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://twitter.com/lherman_cs"  class="twitter" target="_blank">
+            <i class="fa fa-twitter-square" title="twitter"></i>
+            <span class="screen-reader-text">twitter</span>
+        </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+        <a href="mailto:lherman.cs@gmail.com"  class="email">
+            <i class="fa fa-envelope" title="email"></i>
+            <span class="screen-reader-text">email</span>
+        </a>
+        </li>
+        
+
+        
+        <li>
+        <a href="https://www.linkedin.com/in/lukas-herman/" class="linkedin" target="_blank">
+            <i class="fa fa-linkedin" title="linkedin"></i>
+            <span class="screen-reader-text">linkedin</span>
+        </a>
+        </li>
+        
+
+        
+        <li>
+        <a href="https://stackoverflow.com/users/8177592/lukas-herman"  class="stackoverflow" target="_blank">
+            <i class="fa fa-stack-overflow" title="stackoverflow"></i>
+            <span class="screen-reader-text">stackoverflow</span>
+        </a>
+        </li>
+        
+
+
+        
+        <li>
+        <a href="https://github.com/lherman-cs"  class="github" target="_blank">
+            <i class="fa fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://blog.lukas-coding.us/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fa fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>&copy; 2018 Lukas Herman</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://blog.lukas-coding.us/js/jquery.min.js"></script>
+<script src="https://blog.lukas-coding.us/js/jquerymigrate.js"></script>
+<script src="https://blog.lukas-coding.us/js/production.min.js"></script>
+
+</body>
+</html>

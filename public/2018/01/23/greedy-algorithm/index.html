@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https://blog.lukas-coding.us/"
+        },
+        "articleSection" : "post",
+        "name" : "Greedy Algorithm (Lecture)",
+        "headline" : "Greedy Algorithm (Lecture)",
+        "description" : "Lecture by James Wang (jzwang@clemson.edu)
+ Taking the maximum benefit without considering what will happen next; greedy algorithms just need to maximize the local cost.
+ Greedy algorithms can be parallelized well. Each CPU can be used to calculate the local min/max. But, you might not find the best solution using greedy algorithms.
+Steps to finding efficient greedy algorithm:
+ Start by finding a dynamic programming style solution Each recursive step need to solve the local min/max (find the greedy choice) Find the recursive solution using the greedy choice Convert to an iterative algorithm if possible  More generally, taking the direct approach:",
+        "inLanguage" : "en",
+        "author" : "",
+        "creator" : "",
+        "publisher": "",
+        "accountablePerson" : "",
+        "copyrightHolder" : "",
+        "copyrightYear" : "2018",
+        "datePublished": "2018-01-23 19:24:27 -0400 -0400",
+        "dateModified" : "2018-01-23 19:24:27 -0400 -0400",
+        "url" : "https://blog.lukas-coding.us/2018/01/23/greedy-algorithm/",
+        "wordCount" : "268",
+        "image" : https://blog.lukas-coding.us/https://images.unsplash.com/photo-1512075135822-67cdd9dd7314?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ&amp;s=3a19fe5be57ee36b620ec41fa40bfd71",
+        "keywords" : [ "Blog" ]   
+    }
+    </script>
+
+
+ <title>Greedy Algorithm (Lecture) </title>
+
+
+<meta name="description" content="Describe your website" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="//fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+<link rel="stylesheet" href="https://blog.lukas-coding.us/css/font-awesome.min.css" type='text/css' media='all'>
+
+<link href="https://blog.lukas-coding.us/css/style.css" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://blog.lukas-coding.us/css/custom.css" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://blog.lukas-coding.us/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://blog.lukas-coding.us/img/favicon.ico" type="image/x-icon">
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-111663256-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fa fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+    <li>
+      <a href="https://www.facebook.com/lukashadiyanto" data-animate-hover="pulse" class="facebook" target="_blank">
+        <i class="fa fa-facebook-square" title="facebook"></i>
+        <span class="screen-reader-text">facebook</span>
+      </a>
+    </li>
+    
+
+    
+
+    
+    <li>
+      <a href="https://twitter.com/lherman_cs" data-animate-hover="pulse" class="twitter" target="_blank">
+        <i class="fa fa-twitter-square" title="twitter"></i>
+        <span class="screen-reader-text">twitter</span>
+      </a>
+    </li>
+    
+
+    
+
+    
+    <li>
+      <a href="mailto:lherman.cs@gmail.com" data-animate-hover="pulse" class="email">
+        <i class="fa fa-envelope" title="email"></i>
+        <span class="screen-reader-text">email</span>
+      </a>
+    </li>
+    
+
+    
+    <li>
+      <a href="https://www.linkedin.com/in/lukas-herman/" data-animate-hover="pulse" class="linkedin" target="_blank">
+        <i class="fa fa-linkedin" title="linkedin"></i>
+        <span class="screen-reader-text">linkedin</span>
+      </a>
+    </li>
+    
+
+    
+    <li>
+      <a href="https://stackoverflow.com/users/8177592/lukas-herman" data-animate-hover="pulse" class="stackoverflow" target="_blank">
+        <i class="fa fa-stack-overflow" title="stackoverflow"></i>
+        <span class="screen-reader-text">stackoverflow</span>
+      </a>
+    </li>
+    
+
+
+    
+    <li>
+      <a href="https://github.com/lherman-cs" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fa fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://blog.lukas-coding.us/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fa fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Coding and Life </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Thoughts, stories, and ideas.</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li id="menu-item" class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://blog.lukas-coding.us/">Home</a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://images.unsplash.com/photo-1512075135822-67cdd9dd7314?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ&amp;s=3a19fe5be57ee36b620ec41fa40bfd71">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">23 January</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://lukas-coding.us" title="Posts by Lukas Herman" rel="author">Lukas Herman</a>
+          </span>
+
+
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> Greedy Algorithm (Lecture)</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              
+
+<p>Lecture by James Wang (jzwang@clemson.edu)</p>
+
+<blockquote>
+<p>Taking the maximum benefit without considering what will happen next; greedy algorithms just need to maximize the local cost.</p>
+</blockquote>
+
+<p>Greedy algorithms can be parallelized well. Each CPU can be used to calculate the local min/max. <strong>But</strong>, you might not find the best solution using greedy algorithms.</p>
+
+<p>Steps to finding efficient greedy algorithm:</p>
+
+<ol>
+<li>Start by finding a dynamic programming style solution</li>
+<li>Each recursive step need to solve the local min/max (find the greedy choice)</li>
+<li>Find the recursive solution using the greedy choice</li>
+<li>Convert to an iterative algorithm if possible</li>
+</ol>
+
+<p><strong>More generally</strong>, taking the direct approach:</p>
+
+<ol>
+<li>Show the problem is reduced to a sub problem via a greedy choice</li>
+<li>Prove there is an optimal solution containing the greedy choice</li>
+<li>Prove that combining the greedy choice with an optimal solution of the remaining sub problem yields an optimal solution</li>
+</ol>
+
+<p>Problems that can work well with being greedy:</p>
+
+<ol>
+<li><strong>Greedy-choice property</strong>: A global optimum can be arrived at by selecting a local optimum</li>
+<li><strong>Optimal substructure</strong>: An optimal solution to the problem contains an optimal solution to subproblems</li>
+</ol>
+
+<h2 id="example">Example</h2>
+
+<p><img src="/uploads/Screenshot-from-2018-01-23-08-32-44.png" alt="" />
+<em>Note: the picture is taken from my algorithm course&rsquo;s lecture</em></p>
+
+<p>Properties of optimal solution:</p>
+
+<ul>
+<li></li>
+</ul>
+
+<p># of pennies &lt;= 4
+  * Proof: Replace 5 pennies with 1 nickel
+*</p>
+
+<p># of nickels &lt;= 1
+*</p>
+
+<p># of quarters &lt;= 3
+*</p>
+
+<p># of nickels + # of dimes &lt;= 2
+  * Proof:
+    * Replace 3 dimes and 0 nickels with 1 quarter and 1 nickel
+    * Replace 2 dimes and 1 nickel with 1 quarter
+    * Recall: at most 1 nickel</p>
+
+<p><img src="/uploads/Screenshot-from-2018-01-23-08-47-19.png" alt="" />
+<em>Note: the picture is taken from my algorithm course&rsquo;s lecture</em></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+    <img alt='Lukas Herman' src="https://www.gravatar.com/avatar/521ddcdc54f3199e967aed680fa73e4e?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://lukas-coding.us" title="Posts by Lukas Herman" rel="author">Lukas Herman</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      
+	
+      
+      <a class="facebook" target="_blank"
+      href="https://www.facebook.com/lukashadiyanto">
+      <i class="fa fa-facebook"
+      title="facebook icon"></i>
+    </a>
+    
+
+    
+
+
+  
+  <a class="twitter" target="_blank"
+  href="https://twitter.com/lherman_cs">
+  <i class="fa fa-twitter-square"
+  title="twitter icon"></i>
+</a>
+
+
+<a class="linkedin" target="_blank"
+href="https://www.linkedin.com/in/lukas-herman/">
+<i class="fa fa-linkedin-square"
+title="linkedin icon"></i>
+</a>
+
+
+
+<a class="email" target="_blank"
+href="mailto:lherman.cs@gmail.com">
+<i class="fa fa-envelope"
+title="email icon"></i>
+</a>
+
+
+
+
+
+<a class="stackoverflow" target="_blank"
+href="https://stackoverflow.com/users/8177592/lukas-herman">
+<i class="fa fa-stack-overflow"
+title="stackoverflow icon"></i>
+</a>
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/lherman-cs">
+<i class="fa fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Coding and Life </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Thoughts, stories, and ideas.</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+				<li>
+					<a class="facebook" target="_blank"
+					   href="https://www.facebook.com/lukashadiyanto" >
+						<i class="fa fa-facebook" title="facebook"></i>
+						<span class="screen-reader-text">facebook</span>
+					</a>
+				</li>
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://twitter.com/lherman_cs"  class="twitter" target="_blank">
+            <i class="fa fa-twitter-square" title="twitter"></i>
+            <span class="screen-reader-text">twitter</span>
+        </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+        <a href="mailto:lherman.cs@gmail.com"  class="email">
+            <i class="fa fa-envelope" title="email"></i>
+            <span class="screen-reader-text">email</span>
+        </a>
+        </li>
+        
+
+        
+        <li>
+        <a href="https://www.linkedin.com/in/lukas-herman/" class="linkedin" target="_blank">
+            <i class="fa fa-linkedin" title="linkedin"></i>
+            <span class="screen-reader-text">linkedin</span>
+        </a>
+        </li>
+        
+
+        
+        <li>
+        <a href="https://stackoverflow.com/users/8177592/lukas-herman"  class="stackoverflow" target="_blank">
+            <i class="fa fa-stack-overflow" title="stackoverflow"></i>
+            <span class="screen-reader-text">stackoverflow</span>
+        </a>
+        </li>
+        
+
+
+        
+        <li>
+        <a href="https://github.com/lherman-cs"  class="github" target="_blank">
+            <i class="fa fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://blog.lukas-coding.us/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fa fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>&copy; 2018 Lukas Herman</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://blog.lukas-coding.us/js/jquery.min.js"></script>
+<script src="https://blog.lukas-coding.us/js/jquerymigrate.js"></script>
+<script src="https://blog.lukas-coding.us/js/production.min.js"></script>
+
+</body>
+</html>
